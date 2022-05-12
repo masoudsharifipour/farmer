@@ -15,7 +15,10 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<ApplicationUser> Users { get; set; }
     
     public DbSet<Garden> Garden { get; set; }
+    
+    public DbSet<Farmer.Modern.Models.Category> Category { get; set; }
 
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Garden>();
@@ -23,5 +26,7 @@ public class ApplicationDbContext : IdentityDbContext
         
     }
 
-    public DbSet<Farmer.Modern.Models.Category> Category { get; set; }
+    
+    public DbSet<Farmer.Modern.Models.Product> Product { get; set; }
+
 }
