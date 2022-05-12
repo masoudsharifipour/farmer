@@ -29,4 +29,7 @@ public class ApplicationDbContext : IdentityDbContext
     
     public DbSet<Farmer.Modern.Models.Product> Product { get; set; }
 
+    
+    public DbSet<Farmer.Modern.Models.WaterMotor> WaterMotor { get; set; }
+
 }
