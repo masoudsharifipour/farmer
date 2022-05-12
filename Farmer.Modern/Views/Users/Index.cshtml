@@ -1,0 +1,66 @@
+@model System.Collections.Generic.List<ApplicationUser>
+
+@{
+    ViewBag.Title = "کاربران";
+    Layout = "_Layout";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>کاربران</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    لیست کاربران
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                        <tr class="headings">
+                            <th class="column-title">نام کاربری</th>
+                            <th class="column-title">نام</th>
+                            <th class="column-title">نام خانوادگی</th>
+                            <th class="column-title">تلفن</th>
+                            <th class="column-title no-link last">
+                                <span class="nobr">عملیات</span>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        @foreach (var user in Model)
+                        {
+                            <tr class="even pointer">
+                                <td class=" ">@user.UserName</td>
+                                <td class=" ">@user.Name</td>
+                                <td class=" ">@user.LastName</td>
+                                <td class=" ">@user.PhoneNumber</td>
+                                <td class=" last">
+
+                                    <a class="last btn btn-sm btn-success" asp-controller="Roles" asp-action="Edit" asp-route-id="@user.Id">
+                                        <i class="fas fa-pencil-alt"></i> ویرایش
+                                    </a>
+                                    <a class="last btn btn-sm btn-danger" asp-controller="Roles" asp-action="Details" asp-route-id="@user.Id">
+                                        <i class="fas fa-trash-alt"></i> حذف
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

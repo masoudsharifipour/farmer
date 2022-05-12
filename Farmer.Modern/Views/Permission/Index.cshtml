@@ -1,0 +1,75 @@
+@model Farmer.Modern.Dto.PermissionDto
+
+@{
+    ViewBag.Title = "پرمیشن ها";
+    Layout = "_Layout";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>پرمیشن ها</h3>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+                لیست دسترسی ها
+            </h2>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="x_content">
+            <div class="table-responsive">
+                <form asp-controller="Permission" method="post" asp-action="Update" class="d-inline">
+                    <input asp-for="@Model.RoleId" type="hidden"/>
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                        <tr class="headings">
+                            <th class="column-title">نوع دسترسی</th>
+                            <th class="column-title">دسترسی</th>
+                            <th class="column-title">وضعیت</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        @for (var i = 0; i < Model.RoleClaims.Count(); i++)
+                        {
+                            {
+                                <tr class="even pointer">
+                                    <td class=" ">
+                                        <input asp-for="@Model.RoleClaims[i].Type" type="hidden"/>
+                                        @Model.RoleClaims[i].Type
+
+                                    </td>
+                                    <td class=" ">
+                                        <input asp-for="@Model.RoleClaims[i].Value" type="hidden"/>
+                                        @Model.RoleClaims[i].Value
+                                    </td>
+
+                                    <td class=" ">
+                                        <input asp-for="@Model.RoleClaims[i].Selected" class="form-check-input"/>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                        </tbody>
+                    </table>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button class="btn btn-success">ثبت</button>
+                        </div>
+                    </div>
+                    @Html.ActionLink("بازگشت به لیست", "Index" ,"Roles")
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

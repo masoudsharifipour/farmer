@@ -1,0 +1,37 @@
+@model Microsoft.AspNetCore.Identity.IdentityRole
+
+@{
+    ViewBag.Title = "دسترسی";
+    Layout = "_Layout";
+}
+
+<h3 class="alert alert-warning">آیا از حذف @Model.Name مطمن هستید ؟</h3>
+<hr />
+<div>
+    <hr />
+    <div style="line-height:20px !important;">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>`
+
+            <dt>
+                سطح دسترسی
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+        </dl>
+    </div>
+    @using (Html.BeginForm("Delete","Roles",FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-danger" /> |
+            @Html.ActionLink("بازگشت به لیست", "Index")
+        </div>
+    }
+</div>

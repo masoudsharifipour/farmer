@@ -1,0 +1,152 @@
+@model Farmer.Modern.Dto.ApplicationUserInputDto
+
+@{
+    ViewBag.Title = "کاربران";
+    Layout = "_Layout";
+}
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    ثبت کاربر جدید
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+
+                <form asp-action="Create" class="form-horizontal form-label-left">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            نام
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" asp-for="Name" id="name" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">
+                            نام خانوادگی
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" asp-for="LastName" id="lastName" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">
+                            نام کاربری
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" asp-for="UserName" id="username" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                            ایمیل
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" asp-for="Email" id="email" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">
+                            کلمه عبور
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="password" asp-for="Password" id="password" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Address">
+                            آدرس
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" asp-for="Address" id="Address" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">
+                            موبایل
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" asp-for="PhoneNumber" id="phoneNumber" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <div class="form-group">
+                            <input type="submit" value="ثبت" class="btn btn-success"/>
+                            <a class="btn btn-primary" asp-action="Index">بازگشت</a>
+
+                        </div>
+                    </div>
+                </form>
+
+                @* @using (Html.BeginForm()) *@
+                @* { *@
+                @*     @Html.AntiForgeryToken() *@
+                @* *@
+                @*     @Html.ValidationSummary(true, "", new {@class = "text-danger"}) *@
+                @* *@
+                @*     <div class="form-group"> *@
+                @*         @Html.LabelFor(model => model.UserName, "نام کاربری", htmlAttributes: new {@class = "control-label col-md-3 col-sm-3 col-xs-12"}) *@
+                @*         <div class="col-md-6 col-sm-6 col-xs-12"> *@
+                @*             @Html.TextBoxFor(model => model.UserName, new {htmlAttributes = new {@class = "form-control col-md-7 col-xs-12"}}) *@
+                @*             @Html.ValidationMessageFor(model => model.UserName, "", new {@class = "text-danger"}) *@
+                @*         </div> *@
+                @*     </div> *@
+                @*     <div class="form-group"> *@
+                @*         @Html.LabelFor(model => model.Name , "نام", htmlAttributes: new {@class = "control-label col-md-3 col-sm-3 col-xs-12"}) *@
+                @*         <div class="col-md-6 col-sm-6 col-xs-12"> *@
+                @*             @Html.TextBoxFor(model => model.Name, new {htmlAttributes = new {@class = "form-control col-md-7 col-xs-12"}}) *@
+                @*             @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"}) *@
+                @*         </div> *@
+                @*     </div> *@
+                @*     <div class="form-group"> *@
+                @*         @Html.LabelFor(model => model.LastName , "نام خانوادگی", htmlAttributes: new {@class = "control-label col-md-3 col-sm-3 col-xs-12"}) *@
+                @*         <div class="col-md-6 col-sm-6 col-xs-12"> *@
+                @*             @Html.TextBoxFor(model => model.LastName, new {htmlAttributes = new {@class = "form-control col-md-7 col-xs-12"}}) *@
+                @*             @Html.ValidationMessageFor(model => model.LastName, "", new {@class = "text-danger"}) *@
+                @*         </div> *@
+                @*     </div> *@
+                @*      *@
+                @*     <div class="form-group"> *@
+                @*         @Html.LabelFor(model => model.Address , "آدرس", htmlAttributes: new {@class = "control-label col-md-3 col-sm-3 col-xs-12"}) *@
+                @*         <div class="col-md-6 col-sm-6 col-xs-12"> *@
+                @*             @Html.TextBoxFor(model => model.Address, new {htmlAttributes = new {@class = "form-control col-md-7 col-xs-12"}}) *@
+                @*             @Html.ValidationMessageFor(model => model.Address, "", new {@class = "text-danger"}) *@
+                @*         </div> *@
+                @*     </div> *@
+                @*     <div class="form-group"> *@
+                @*         @Html.LabelFor(model => model.Password , "کلمه عبور", htmlAttributes: new {@class = "control-label col-md-3 col-sm-3 col-xs-12"}) *@
+                @*         <div class="col-md-6 col-sm-6 col-xs-12"> *@
+                @*             @Html.TextBoxFor(model => model.Password, new {htmlAttributes = new {@class = "form-control col-md-7 col-xs-12"}}) *@
+                @*             @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"}) *@
+                @*         </div> *@
+                @*     </div> *@
+                @*     <div class="form-group"> *@
+                @*         <div class="col-md-offset-2 col-md-10"> *@
+                @*             <input type="submit" value="ثبت" class="btn btn-success"/> *@
+                @*         </div> *@
+                @*     </div> *@
+                @* } *@
+            </div>
+        </div>
+    </div>
+</div>
