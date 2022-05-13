@@ -28,10 +28,10 @@ namespace Farmer.Modern.Controllers
             var motors = await _context.WaterMotor.ToListAsync();
             var agents = await _context.Users.ToListAsync();
 
-            ViewBag.Garden = new SelectList(gardens, "Id", "Name");
-            ViewBag.Product = new SelectList(products, "Id", "Name");
-            ViewBag.Category = new SelectList(categories, "Id", "Name");
-            ViewBag.Motor = new SelectList(motors, "Id", "Name");
+            ViewBag.GardenId = new SelectList(gardens, "Id", "Name");
+            ViewBag.ProductId = new SelectList(products, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(categories, "Id", "Name");
+            ViewBag.WaterMotorId = new SelectList(motors, "Id", "Name");
             ViewBag.Agent = new SelectList(agents, "Id", "Name");
         }
 
@@ -44,10 +44,10 @@ namespace Farmer.Modern.Controllers
             var motors = await _context.WaterMotor.ToListAsync();
             var agents = await _context.Users.ToListAsync();
 
-            ViewBag.Garden = new SelectList(gardens, "Id", "Name", gardenId);
-            ViewBag.Product = new SelectList(products, "Id", "Name", productId);
-            ViewBag.Category = new SelectList(categories, "Id", "Name", categoryId);
-            ViewBag.Motor = new SelectList(motors, "Id", "Name", motorId);
+            ViewBag.GardenId = new SelectList(gardens, "Id", "Name", gardenId);
+            ViewBag.ProductId = new SelectList(products, "Id", "Name", productId);
+            ViewBag.CategoryId = new SelectList(categories, "Id", "Name", categoryId);
+            ViewBag.WaterMotorId = new SelectList(motors, "Id", "Name", motorId);
             ViewBag.Agent = new SelectList(agents, "Id", "Name", agentId);
         }
 
@@ -123,17 +123,34 @@ namespace Farmer.Modern.Controllers
             }
 
             var work = await _context.Work.FindAsync(id);
+            var w = new WorkDto
+            {
+                Agent = work.Agent,
+                Description = work.Description,
+                Size = work.Size,
+                CategoryId = work.CategoryId,
+                GardenId = work.GardenId,
+                Status = work.Status,
+                Type = work.Type,
+                ActionDatetime = work.ActionDatetime,
+                WaterMotorId = work.WaterMotorId,
+                EndActionDateTime = work.EndActionDateTime,
+                ProductId = work.ProductId
+
+            };
             if (work != null)
             {
                 await this.DropDownBindingEdit(work.GardenId, work.ProductId, work.CategoryId, work.WaterMotorId,
                     work.Agent);
+                
+
                 if (work == null)
                 {
                     return NotFound();
                 }
             }
 
-            return View(work);
+            return View(w);
         }
 
         // POST: Work/Edit/5

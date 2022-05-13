@@ -7,54 +7,79 @@
 <h1>Edit</h1>
 
 <h4>Work</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id"/>
             <div class="form-group">
                 <label asp-for="ActionDatetime" class="control-label"></label>
-                <input asp-for="ActionDatetime" class="form-control" />
+                <input asp-for="ActionDatetime" class="form-control"/>
                 <span asp-validation-for="ActionDatetime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Size" class="control-label"></label>
-                <input asp-for="Size" class="form-control" />
+                <input asp-for="Size" class="form-control"/>
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
+                <input asp-for="Type" class="form-control"/>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <input asp-for="Description" class="form-control"/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CreatorUserId" class="control-label"></label>
-                <input asp-for="CreatorUserId" class="form-control" />
+                <input asp-for="CreatorUserId" class="form-control"/>
                 <span asp-validation-for="CreatorUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Agent" class="control-label"></label>
-                <input asp-for="Agent" class="form-control" />
+                <input asp-for="Agent" class="form-control"/>
                 <span asp-validation-for="Agent" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndActionDateTime" class="control-label"></label>
-                <input asp-for="EndActionDateTime" class="form-control" />
+                <input asp-for="EndActionDateTime" class="form-control"/>
                 <span asp-validation-for="EndActionDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
+                <select asp-for="Status" class="form-control">Todo</select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="GardenId" class="control-label"></label>
+                @Html.DropDownList("Garden", ViewBag.Garden as SelectList, htmlAttributes: new {@class = "form-control"})
+                <span asp-validation-for="GardenId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterMotorId" class="control-label"></label>
+                @Html.DropDownList("Motor", ViewBag.Motor as SelectList, htmlAttributes: new {@class = "form-control"})
+                <span asp-validation-for="WaterMotorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                @Html.DropDownList("Product", ViewBag.Product as SelectList, htmlAttributes: new {@class = "form-control"})
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                @Html.DropDownList("Category", ViewBag.Category as SelectList, htmlAttributes: new {@class = "form-control"})
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agent" class="control-label"></label>
+                @Html.DropDownList("Agent", ViewBag.Agent as SelectList, htmlAttributes: new {@class = "form-control"})
+                <span asp-validation-for="Agent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -63,4 +88,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
