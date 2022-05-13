@@ -38,4 +38,7 @@ public class ApplicationDbContext : IdentityDbContext
     
     public DbSet<Farmer.Modern.Models.Harvest> Harvest { get; set; }
 
+    
+    public DbSet<Farmer.Modern.Models.Work> Work { get; set; }
+    
 }
