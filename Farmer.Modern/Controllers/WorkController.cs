@@ -20,6 +20,37 @@ namespace Farmer.Modern.Controllers
             _context = context;
         }
 
+        public async Task DropDownBinding()
+        {
+            var gardens = await _context.Garden.ToListAsync();
+            var products = await _context.Product.ToListAsync();
+            var categories = await _context.Category.ToListAsync();
+            var motors = await _context.WaterMotor.ToListAsync();
+            var agents = await _context.Users.ToListAsync();
+
+            ViewBag.Garden = new SelectList(gardens, "Id", "Name");
+            ViewBag.Product = new SelectList(products, "Id", "Name");
+            ViewBag.Category = new SelectList(categories, "Id", "Name");
+            ViewBag.Motor = new SelectList(motors, "Id", "Name");
+            ViewBag.Agent = new SelectList(agents, "Id", "Name");
+        }
+
+        public async Task DropDownBindingEdit(long gardenId, long? productId, long categoryId, long? motorId,
+            Guid? agentId)
+        {
+            var gardens = await _context.Garden.ToListAsync();
+            var products = await _context.Product.ToListAsync();
+            var categories = await _context.Category.ToListAsync();
+            var motors = await _context.WaterMotor.ToListAsync();
+            var agents = await _context.Users.ToListAsync();
+
+            ViewBag.Garden = new SelectList(gardens, "Id", "Name", gardenId);
+            ViewBag.Product = new SelectList(products, "Id", "Name", productId);
+            ViewBag.Category = new SelectList(categories, "Id", "Name", categoryId);
+            ViewBag.Motor = new SelectList(motors, "Id", "Name", motorId);
+            ViewBag.Agent = new SelectList(agents, "Id", "Name", agentId);
+        }
+
         // GET: Work
         public async Task<IActionResult> Index()
         {
@@ -45,8 +76,9 @@ namespace Farmer.Modern.Controllers
         }
 
         // GET: Work/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            await this.DropDownBinding();
             return View();
         }
 
@@ -59,11 +91,26 @@ namespace Farmer.Modern.Controllers
         {
             if (ModelState.IsValid)
             {
-                Work w = new Work();
-                _context.Add(work);
+                var w = new Work
+                {
+                    Agent = work.Agent,
+                    Description = work.Description,
+                    Size = work.Size,
+                    CategoryId = work.CategoryId,
+                    GardenId = work.GardenId,
+                    Status = work.Status,
+                    Type = work.Type,
+                    ActionDatetime = work.ActionDatetime,
+                    WaterMotorId = work.WaterMotorId,
+                    EndActionDateTime = work.EndActionDateTime,
+                    ProductId = work.ProductId
+
+                };
+                _context.Add(w);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(work);
         }
 
@@ -76,10 +123,16 @@ namespace Farmer.Modern.Controllers
             }
 
             var work = await _context.Work.FindAsync(id);
-            if (work == null)
+            if (work != null)
             {
-                return NotFound();
+                await this.DropDownBindingEdit(work.GardenId, work.ProductId, work.CategoryId, work.WaterMotorId,
+                    work.Agent);
+                if (work == null)
+                {
+                    return NotFound();
+                }
             }
+
             return View(work);
         }
 
@@ -88,7 +141,8 @@ namespace Farmer.Modern.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,ActionDatetime,Size,Type,Description,CreatorUserId,Agent,EndActionDateTime,Status")] Work work)
+        public async Task<IActionResult> Edit(long id,
+            WorkDto work)
         {
             if (id != work.Id)
             {
@@ -99,7 +153,23 @@ namespace Farmer.Modern.Controllers
             {
                 try
                 {
-                    _context.Update(work);
+                    var w = new Work
+                    {
+                        Id = id,
+                        Agent = work.Agent,
+                        Description = work.Description,
+                        Size = work.Size,
+                        CategoryId = work.CategoryId,
+                        GardenId = work.GardenId,
+                        Status = work.Status,
+                        Type = work.Type,
+                        ActionDatetime = work.ActionDatetime,
+                        WaterMotorId = work.WaterMotorId,
+                        EndActionDateTime = work.EndActionDateTime,
+                        ProductId = work.ProductId
+
+                    };
+                    _context.Update(w);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -113,8 +183,10 @@ namespace Farmer.Modern.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(work);
         }
 
