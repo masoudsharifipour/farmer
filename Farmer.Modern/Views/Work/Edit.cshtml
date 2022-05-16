@@ -38,39 +38,36 @@
                 <input asp-for="CreatorUserId" class="form-control"/>
                 <span asp-validation-for="CreatorUserId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Agent" class="control-label"></label>
-                <input asp-for="Agent" class="form-control"/>
-                <span asp-validation-for="Agent" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="EndActionDateTime" class="control-label"></label>
                 <input asp-for="EndActionDateTime" class="form-control"/>
                 <span asp-validation-for="EndActionDateTime" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control">Todo</select>
+                @Html.DropDownList("Status", ViewBag.Status as SelectList, htmlAttributes: new {@class = "form-control"})
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GardenId" class="control-label"></label>
-                @Html.DropDownList("Garden", ViewBag.Garden as SelectList, htmlAttributes: new {@class = "form-control"})
+                @Html.DropDownList("GardenId", ViewBag.Garden as SelectList, htmlAttributes: new {@class = "form-control"})
                 <span asp-validation-for="GardenId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="WaterMotorId" class="control-label"></label>
-                @Html.DropDownList("Motor", ViewBag.Motor as SelectList, htmlAttributes: new {@class = "form-control"})
+                @Html.DropDownList("WaterMotorId", ViewBag.Motor as SelectList, htmlAttributes: new {@class = "form-control"})
                 <span asp-validation-for="WaterMotorId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
-                @Html.DropDownList("Product", ViewBag.Product as SelectList, htmlAttributes: new {@class = "form-control"})
+                @Html.DropDownList("ProductId", ViewBag.Product as SelectList, htmlAttributes: new {@class = "form-control"})
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                @Html.DropDownList("Category", ViewBag.Category as SelectList, htmlAttributes: new {@class = "form-control"})
+                @Html.DropDownList("CategoryId", ViewBag.Category as SelectList, htmlAttributes: new {@class = "form-control"})
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -27,28 +27,37 @@ namespace Farmer.Modern.Controllers
             var categories = await _context.Category.ToListAsync();
             var motors = await _context.WaterMotor.ToListAsync();
             var agents = await _context.Users.ToListAsync();
+            
+            var status = (from object e in Enum.GetValues(typeof(ActionStatus)) 
+                select new KeyValuePair<string, int>(e.ToString(), (int) e)).ToList();
+
 
             ViewBag.GardenId = new SelectList(gardens, "Id", "Name");
             ViewBag.ProductId = new SelectList(products, "Id", "Name");
             ViewBag.CategoryId = new SelectList(categories, "Id", "Name");
             ViewBag.WaterMotorId = new SelectList(motors, "Id", "Name");
             ViewBag.Agent = new SelectList(agents, "Id", "Name");
+            ViewBag.Status = new SelectList(status, "Value", "Key");
         }
 
         public async Task DropDownBindingEdit(long gardenId, long? productId, long categoryId, long? motorId,
-            Guid? agentId)
+            Guid? agentId , ActionStatus actionStatus)
         {
             var gardens = await _context.Garden.ToListAsync();
             var products = await _context.Product.ToListAsync();
             var categories = await _context.Category.ToListAsync();
             var motors = await _context.WaterMotor.ToListAsync();
             var agents = await _context.Users.ToListAsync();
+            var status = (from object e in Enum.GetValues(typeof(ActionStatus)) 
+                select new KeyValuePair<string, int>(e.ToString(), (int) e)).ToList();
 
             ViewBag.GardenId = new SelectList(gardens, "Id", "Name", gardenId);
             ViewBag.ProductId = new SelectList(products, "Id", "Name", productId);
             ViewBag.CategoryId = new SelectList(categories, "Id", "Name", categoryId);
             ViewBag.WaterMotorId = new SelectList(motors, "Id", "Name", motorId);
             ViewBag.Agent = new SelectList(agents, "Id", "Name", agentId);
+            ViewBag.Status = new SelectList(status, "Value", "Key" , actionStatus);
+
         }
 
         // GET: Work
@@ -123,6 +132,7 @@ namespace Farmer.Modern.Controllers
             }
 
             var work = await _context.Work.FindAsync(id);
+            if (work == null) throw new ArgumentNullException(nameof(work));
             var w = new WorkDto
             {
                 Agent = work.Agent,
@@ -138,17 +148,9 @@ namespace Farmer.Modern.Controllers
                 ProductId = work.ProductId
 
             };
-            if (work != null)
-            {
-                await this.DropDownBindingEdit(work.GardenId, work.ProductId, work.CategoryId, work.WaterMotorId,
-                    work.Agent);
-                
+            await this.DropDownBindingEdit(work.GardenId, work.ProductId, work.CategoryId, work.WaterMotorId,
+                work.Agent,work.Status);
 
-                if (work == null)
-                {
-                    return NotFound();
-                }
-            }
 
             return View(w);
         }
