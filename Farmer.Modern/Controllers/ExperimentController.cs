@@ -28,19 +28,19 @@ namespace Farmer.Modern.Controllers
             ViewBag.Garden = new SelectList(gardens, "Id", "Name");
             ViewBag.WaterMotor = new SelectList(motors, "Id", "Name");
         }
-        
-        public void BindingDateEdit(long gardenId , long motorsId)
+
+        public void BindingDateEdit(long gardenId, long motorsId)
         {
             var Garden = _context.Garden.ToList();
             var WaterMotor = _context.WaterMotor.ToList();
-            ViewBag.Garden = new SelectList(Garden, "Id", "Name",gardenId);
-            ViewBag.WaterMotor = new SelectList(WaterMotor, "Id", "Name",motorsId);
+            ViewBag.Garden = new SelectList(Garden, "Id", "Name", gardenId);
+            ViewBag.WaterMotor = new SelectList(WaterMotor, "Id", "Name", motorsId);
         }
 
         // GET: Experiment
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Experiment.ToListAsync());
+            return View(await _context.Experiment.Include(x => x.Garden).Include(x => x.WaterMotor).ToListAsync());
         }
 
         // GET: Experiment/Details/5
@@ -51,7 +51,7 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var experiment = await _context.Experiment
+            var experiment = await _context.Experiment.Include(x => x.Garden).Include(x => x.WaterMotor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (experiment == null)
             {
@@ -86,7 +86,6 @@ namespace Farmer.Modern.Controllers
             _context.Add(ex);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-
         }
 
         // GET: Experiment/Edit/5
@@ -99,21 +98,20 @@ namespace Farmer.Modern.Controllers
 
             var experiment = await _context.Experiment.FindAsync(id);
             ExperimentDto ex = new ExperimentDto();
-        
+
             if (experiment != null)
             {
                 BindingDateEdit(experiment.GardenId, experiment.WaterMotorId);
                 ex.Description = experiment.Description;
                 ex.Result = experiment.Result;
-                
+
                 if (experiment == null)
                 {
                     return NotFound();
                 }
-
             }
-            return View(ex);
 
+            return View(ex);
         }
 
         // POST: Experiment/Edit/5
@@ -169,7 +167,7 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var experiment = await _context.Experiment
+            var experiment = await _context.Experiment.Include(x => x.Garden).Include(x => x.WaterMotor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (experiment == null)
             {
