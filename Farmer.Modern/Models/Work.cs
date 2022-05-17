@@ -20,7 +20,8 @@ public class Work
     public string Type { get; set; }
     public string Description { get; set; }
     public Guid? CreatorUserId { get; set; }
-    public Guid? Agent { get; set; }
+    
+    public Guid? AgentId { get; set; }
     public DateTime? EndActionDateTime { get; set; }
     public ActionStatus Status { get; set; }
 }

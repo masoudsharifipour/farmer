@@ -27,8 +27,8 @@ namespace Farmer.Modern.Controllers
             var categories = await _context.Category.ToListAsync();
             var motors = await _context.WaterMotor.ToListAsync();
             var agents = await _context.Users.ToListAsync();
-            
-            var status = (from object e in Enum.GetValues(typeof(ActionStatus)) 
+
+            var status = (from object e in Enum.GetValues(typeof(ActionStatus))
                 select new KeyValuePair<string, int>(e.ToString(), (int) e)).ToList();
 
 
@@ -41,14 +41,14 @@ namespace Farmer.Modern.Controllers
         }
 
         public async Task DropDownBindingEdit(long gardenId, long? productId, long categoryId, long? motorId,
-            Guid? agentId , ActionStatus actionStatus)
+            Guid? agentId, ActionStatus actionStatus)
         {
             var gardens = await _context.Garden.ToListAsync();
             var products = await _context.Product.ToListAsync();
             var categories = await _context.Category.ToListAsync();
             var motors = await _context.WaterMotor.ToListAsync();
             var agents = await _context.Users.ToListAsync();
-            var status = (from object e in Enum.GetValues(typeof(ActionStatus)) 
+            var status = (from object e in Enum.GetValues(typeof(ActionStatus))
                 select new KeyValuePair<string, int>(e.ToString(), (int) e)).ToList();
 
             ViewBag.GardenId = new SelectList(gardens, "Id", "Name", gardenId);
@@ -56,14 +56,46 @@ namespace Farmer.Modern.Controllers
             ViewBag.CategoryId = new SelectList(categories, "Id", "Name", categoryId);
             ViewBag.WaterMotorId = new SelectList(motors, "Id", "Name", motorId);
             ViewBag.Agent = new SelectList(agents, "Id", "Name", agentId);
-            ViewBag.Status = new SelectList(status, "Value", "Key" , actionStatus);
-
+            ViewBag.Status = new SelectList(status, "Value", "Key", actionStatus);
         }
 
         // GET: Work
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Work.ToListAsync());
+            var workDtos = new List<WorkDto>();
+            var work = await _context.Work.Include(x => x.Category)
+                .Include(x => x.Garden)
+                .Include(x => x.Product)
+                .Include(x => x.WaterMotor).ToListAsync();
+
+            foreach (var item in work)
+            {
+                var agentFullName = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.AgentId.ToString());
+                var creatorUserId =
+                    await _context.Users.FirstOrDefaultAsync(x => x.Id == item.CreatorUserId.ToString());
+
+                workDtos.Add(new WorkDto
+                {
+                    Id = item.Id,
+                    ActionDatetime = item.ActionDatetime,
+                    Agent = item.AgentId,
+                    CategoryName = item.Category.Name,
+                    CategoryId = item.CategoryId,
+                    CreatorFullName = $"{creatorUserId?.Name} {creatorUserId?.LastName}",
+                    FullNameAgent = $"{agentFullName?.Name} {agentFullName?.LastName}",
+                    Status = item.Status,
+                    EndActionDateTime = item.EndActionDateTime,
+                    GardenName = item.Garden.Name,
+                    ProductName = item.Product.Name,
+                    WaterMotorName = item.WaterMotor?.Name,
+                    Description = item.Description,
+                    Type = item.Type,
+                    Size = item.Size,
+                    
+                });
+            }
+
+            return View(workDtos);
         }
 
         // GET: Work/Details/5
@@ -74,8 +106,12 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var work = await _context.Work
+            var work = await _context.Work.Include(x => x.Category)
+                .Include(x => x.Garden)
+                .Include(x => x.Product)
+                .Include(x => x.WaterMotor)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (work == null)
             {
                 return NotFound();
@@ -102,7 +138,7 @@ namespace Farmer.Modern.Controllers
             {
                 var w = new Work
                 {
-                    Agent = work.Agent,
+                    AgentId = work.Agent,
                     Description = work.Description,
                     Size = work.Size,
                     CategoryId = work.CategoryId,
@@ -113,7 +149,6 @@ namespace Farmer.Modern.Controllers
                     WaterMotorId = work.WaterMotorId,
                     EndActionDateTime = work.EndActionDateTime,
                     ProductId = work.ProductId
-
                 };
                 _context.Add(w);
                 await _context.SaveChangesAsync();
@@ -135,7 +170,7 @@ namespace Farmer.Modern.Controllers
             if (work == null) throw new ArgumentNullException(nameof(work));
             var w = new WorkDto
             {
-                Agent = work.Agent,
+                Agent = work.AgentId,
                 Description = work.Description,
                 Size = work.Size,
                 CategoryId = work.CategoryId,
@@ -146,10 +181,9 @@ namespace Farmer.Modern.Controllers
                 WaterMotorId = work.WaterMotorId,
                 EndActionDateTime = work.EndActionDateTime,
                 ProductId = work.ProductId
-
             };
             await this.DropDownBindingEdit(work.GardenId, work.ProductId, work.CategoryId, work.WaterMotorId,
-                work.Agent,work.Status);
+                work.AgentId, work.Status);
 
 
             return View(w);
@@ -175,7 +209,7 @@ namespace Farmer.Modern.Controllers
                     var w = new Work
                     {
                         Id = id,
-                        Agent = work.Agent,
+                        AgentId = work.Agent,
                         Description = work.Description,
                         Size = work.Size,
                         CategoryId = work.CategoryId,
@@ -186,7 +220,6 @@ namespace Farmer.Modern.Controllers
                         WaterMotorId = work.WaterMotorId,
                         EndActionDateTime = work.EndActionDateTime,
                         ProductId = work.ProductId
-
                     };
                     _context.Update(w);
                     await _context.SaveChangesAsync();
