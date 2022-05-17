@@ -37,7 +37,7 @@ namespace Farmer.Modern.Controllers
         // GET: Harvest
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Harvest.ToListAsync());
+            return View(await _context.Harvest.Include(x=>x.Garden).Include(x=>x.Product).ToListAsync());
         }
 
         // GET: Harvest/Details/5
@@ -48,7 +48,7 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var harvest = await _context.Harvest
+            var harvest = await _context.Harvest.Include(x=>x.Garden).Include(x=>x.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (harvest == null)
             {
@@ -168,7 +168,7 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var harvest = await _context.Harvest
+            var harvest = await _context.Harvest.Include(x=>x.Garden).Include(x=>x.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (harvest == null)
             {

@@ -1,47 +1,79 @@
 @model IEnumerable<Farmer.Modern.Models.Harvest>
 
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "برداشت";
 }
 
-<h1>Index</h1>
+<div class="page-title">
+    <div class="title_left">
+        <h3>برداشت</h3>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HarvestDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HarvestDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    آزمایشات
+                </h2>
+                <div class="clearfix"></div>
+
+                <p>
+                    <a class="btn btn-success" asp-action="Create">جدید</a>
+                </p>
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                        <tr class="headings">
+                            <th class="column-title"> @Html.DisplayNameFor(model => model.Garden.Name)</th>
+                            <th class="column-title"> @Html.DisplayNameFor(model => model.Product.Name)</th>
+                            <th class="column-title"> @Html.DisplayNameFor(model => model.Size)</th>
+                            <th class="column-title"> @Html.DisplayNameFor(model => model.HarvestDate)</th>
+                            <th class="column-title"> @Html.DisplayNameFor(model => model.Description)</th>
+                            <th class="column-title no-link last">
+                                <span class="nobr">عملیات</span>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Garden.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Product.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HarvestDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+
+                                <td>
+                                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">ویرایش</a> |
+                                    <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.Id">جزئیات</a> |
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

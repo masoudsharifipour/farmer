@@ -1,48 +1,69 @@
 @model Farmer.Modern.Dto.HarvestDto
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "ویرایش";
 }
 
-<h1>Edit</h1>
-
-<h4>Harvest</h4>
-<hr/>
+<div class="clearfix"></div>
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id"/>
-            <div class="form-group">
-                <label asp-for="Size" class="control-label"></label>
-                <input asp-for="Size" class="form-control"/>
-                <span asp-validation-for="Size" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HarvestDate" class="control-label"></label>
-                <input asp-for="HarvestDate" class="form-control"/>
-                <span asp-validation-for="HarvestDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control"/>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.DropDownList("Garden", ViewBag.Garden as SelectList, new {@class = "form-control"})
 
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    ویرایش
+                </h2>
+                <div class="clearfix"></div>
             </div>
-            <div class="form-group">
-                @Html.DropDownList("Product", ViewBag.WaterMotor as SelectList, new {@class = "form-control"})
-
+            <div class="x_content">
+                <br>
+                <form asp-action="Edit" class="form-horizontal form-label-left">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id"/>
+                    <div class="form-group">
+                        <label asp-for="Garden" class="control-label col-md-3 col-sm-3 col-xs-12"> </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("Garden", ViewBag.Garden as SelectList, new {@class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                        <span asp-validation-for="Garden" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product" class="control-label col-md-3 col-sm-3 col-xs-12"> </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("Product", ViewBag.Product as SelectList, new {@class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                        <span asp-validation-for="Product" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Size" class="control-label col-md-3 col-sm-3 col-xs-12"> </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input asp-for="Size" class="form-control col-md-7 col-xs-12"/>
+                        </div>
+                        <span asp-validation-for="Size" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HarvestDate" class="control-label col-md-3 col-sm-3 col-xs-12"> </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input asp-for="HarvestDate" class="form-control col-md-7 col-xs-12"/>
+                        </div>
+                        <span asp-validation-for="HarvestDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label col-md-3 col-sm-3 col-xs-12"> </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input asp-for="Description" class="form-control col-md-7 col-xs-12"/>
+                        </div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ثبت" class="btn btn-primary"/>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-dark" asp-action="Index">بازگشت</a>
 </div>
