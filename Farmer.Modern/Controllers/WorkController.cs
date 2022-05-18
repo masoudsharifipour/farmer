@@ -274,14 +274,39 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var work = await _context.Work
+            WorkDto workDto = new WorkDto();
+            var work = await _context.Work.Include(x => x.Category)
+                .Include(x => x.Garden)
+                .Include(x => x.Product)
+                .Include(x => x.WaterMotor)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var agentFullName = await _context.Users.FirstOrDefaultAsync(x => x.Id == work.AgentId.ToString());
+            var creatorUser =
+                await _context.Users.FirstOrDefaultAsync(x => x.Id == work.CreatorUserId.ToString());
+
+
+            workDto.Id = work.Id;
+            workDto.ActionDatetime = work.ActionDatetime;
+            workDto.Agent = work.AgentId;
+            workDto.CategoryName = work.Category.Name;
+            workDto.CategoryId = work.CategoryId;
+            workDto.CreatorFullName = $"{creatorUser?.Name} {creatorUser?.LastName}";
+            workDto.FullNameAgent = $"{agentFullName?.Name} {agentFullName?.LastName}";
+            workDto.Status = work.Status;
+            workDto.EndActionDateTime = work.EndActionDateTime;
+            workDto.GardenName = work.Garden.Name;
+            workDto.ProductName = work.Product.Name;
+            workDto.WaterMotorName = work.WaterMotor?.Name;
+            workDto.Description = work.Description;
+            workDto.Type = work.Type;
+            workDto.Size = work.Size;                
             if (work == null)
             {
                 return NotFound();
             }
 
-            return View(work);
+            return View(workDto);
         }
 
         // POST: Work/Delete/5

@@ -1,4 +1,5 @@
-
+using System.Globalization;
+using System.Threading;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -10,8 +11,12 @@ public class Program
     public static void Main(string[] args)
     {
         CreateHostBuilder(args).Build().Run();
+        CultureInfo info = new CultureInfo("fa-Ir");
+//set Persian option to specified culture
+        info.DateTimeFormat.Calendar = new PersianCalendar();
+        Thread.CurrentThread.CurrentCulture = info;
     }
-    
+
     public static IHostBuilder CreateHostBuilder(string[] args)
     {
         return Host.CreateDefaultBuilder(args)
@@ -24,7 +29,6 @@ public class Program
                     logging.AddConsole();
                     logging.SetMinimumLevel(LogLevel.Information);
                 });
-
             })
             .ConfigureLogging((hostingContext, logging) =>
                 logging.SetMinimumLevel(hostingContext.HostingEnvironment.IsProduction()
@@ -32,32 +36,3 @@ public class Program
                     : LogLevel.Trace));
     }
 }
-
-//
-// var builder = WebApplication.CreateBuilder(args);
-//
-// // Add services to the container.
-// builder.Services.AddControllersWithViews();
-//
-// var app = builder.Build();
-//
-// // Configure the HTTP request pipeline.
-// if (!app.Environment.IsDevelopment())
-// {
-//     app.UseExceptionHandler("/Home/Error");
-//     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//     app.UseHsts();
-// }
-//
-// app.UseHttpsRedirection();
-// app.UseStaticFiles();
-//
-// app.UseRouting();
-//
-// app.UseAuthorization();
-//
-// app.MapControllerRoute(
-//     name: "default",
-//     pattern: "{controller=Home}/{action=Index}/{id?}");
-//
-// app.Run();
