@@ -71,7 +71,7 @@ namespace Farmer.Modern.Controllers
             foreach (var item in work)
             {
                 var agentFullName = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.AgentId.ToString());
-                var creatorUserId =
+                var creatorUser =
                     await _context.Users.FirstOrDefaultAsync(x => x.Id == item.CreatorUserId.ToString());
 
                 workDtos.Add(new WorkDto
@@ -81,7 +81,7 @@ namespace Farmer.Modern.Controllers
                     Agent = item.AgentId,
                     CategoryName = item.Category.Name,
                     CategoryId = item.CategoryId,
-                    CreatorFullName = $"{creatorUserId?.Name} {creatorUserId?.LastName}",
+                    CreatorFullName = $"{creatorUser?.Name} {creatorUser?.LastName}",
                     FullNameAgent = $"{agentFullName?.Name} {agentFullName?.LastName}",
                     Status = item.Status,
                     EndActionDateTime = item.EndActionDateTime,
@@ -91,7 +91,6 @@ namespace Farmer.Modern.Controllers
                     Description = item.Description,
                     Type = item.Type,
                     Size = item.Size,
-                    
                 });
             }
 
@@ -106,18 +105,42 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
+            var workDtos = new WorkDto();
+
             var work = await _context.Work.Include(x => x.Category)
                 .Include(x => x.Garden)
                 .Include(x => x.Product)
                 .Include(x => x.WaterMotor)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            var agentFullName = await _context.Users.FirstOrDefaultAsync(x => x.Id == work.AgentId.ToString());
+            var creatorUser =
+                await _context.Users.FirstOrDefaultAsync(x => x.Id == work.CreatorUserId.ToString());
+
+
+            workDtos.Id = work.Id;
+            workDtos.ActionDatetime = work.ActionDatetime;
+            workDtos.Agent = work.AgentId;
+            workDtos.CategoryName = work.Category.Name;
+            workDtos.CategoryId = work.CategoryId;
+            workDtos.CreatorFullName = $"{creatorUser?.Name} {creatorUser?.LastName}";
+            workDtos.FullNameAgent = $"{agentFullName?.Name} {agentFullName?.LastName}";
+            workDtos.Status = work.Status;
+            workDtos.EndActionDateTime = work.EndActionDateTime;
+            workDtos.GardenName = work.Garden.Name;
+            workDtos.ProductName = work.Product.Name;
+            workDtos.WaterMotorName = work.WaterMotor?.Name;
+            workDtos.Description = work.Description;
+            workDtos.Type = work.Type;
+            workDtos.Size = work.Size;
+
+
             if (work == null)
             {
                 return NotFound();
             }
 
-            return View(work);
+            return View(workDtos);
         }
 
         // GET: Work/Create
@@ -148,7 +171,8 @@ namespace Farmer.Modern.Controllers
                     ActionDatetime = work.ActionDatetime,
                     WaterMotorId = work.WaterMotorId,
                     EndActionDateTime = work.EndActionDateTime,
-                    ProductId = work.ProductId
+                    ProductId = work.ProductId,
+                    
                 };
                 _context.Add(w);
                 await _context.SaveChangesAsync();
