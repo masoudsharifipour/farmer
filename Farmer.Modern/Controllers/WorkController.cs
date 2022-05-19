@@ -41,14 +41,14 @@ namespace Farmer.Modern.Controllers
         }
 
         public async Task DropDownBindingEdit(long gardenId, long? productId, long categoryId, long? motorId,
-            Guid? agentId, ActionStatus actionStatus)
+            Guid? agentId, ActionStatus status)
         {
             var gardens = await _context.Garden.ToListAsync();
             var products = await _context.Product.ToListAsync();
             var categories = await _context.Category.ToListAsync();
             var motors = await _context.WaterMotor.ToListAsync();
             var agents = await _context.Users.ToListAsync();
-            var status = (from object e in Enum.GetValues(typeof(ActionStatus))
+            var statusResult = (from object e in Enum.GetValues(typeof(ActionStatus))
                 select new KeyValuePair<string, int>(e.ToString(), (int) e)).ToList();
 
             ViewBag.GardenId = new SelectList(gardens, "Id", "Name", gardenId);
@@ -56,7 +56,7 @@ namespace Farmer.Modern.Controllers
             ViewBag.CategoryId = new SelectList(categories, "Id", "Name", categoryId);
             ViewBag.WaterMotorId = new SelectList(motors, "Id", "Name", motorId);
             ViewBag.Agent = new SelectList(agents, "Id", "Name", agentId);
-            ViewBag.Status = new SelectList(status, "Value", "Key", actionStatus);
+            ViewBag.Status = new SelectList(statusResult, "Value", "Key", (int)status);
         }
 
         // GET: Work
@@ -199,7 +199,6 @@ namespace Farmer.Modern.Controllers
                 Size = work.Size,
                 CategoryId = work.CategoryId,
                 GardenId = work.GardenId,
-                Status = work.Status,
                 Type = work.Type,
                 ActionDatetime = work.ActionDatetime,
                 WaterMotorId = work.WaterMotorId,

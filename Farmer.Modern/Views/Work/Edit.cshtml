@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label asp-for="Status" class="control-label col-md-3 col-sm-3 col-xs-12"></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.DropDownList("actionStatus", ViewBag.Status as SelectList, htmlAttributes: new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.DropDownList("status", ViewBag.Status as SelectList, htmlAttributes: new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                         <span asp-validation-for="Status" class="text-danger"></span>
                     </div>

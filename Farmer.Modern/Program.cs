@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Threading;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -10,11 +13,13 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args).Build().Run();
         CultureInfo info = new CultureInfo("fa-Ir");
-//set Persian option to specified culture
         info.DateTimeFormat.Calendar = new PersianCalendar();
         Thread.CurrentThread.CurrentCulture = info;
+        Thread.CurrentThread.CurrentUICulture = info;
+
+        CreateHostBuilder(args).Build().Run();
+ 
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)
