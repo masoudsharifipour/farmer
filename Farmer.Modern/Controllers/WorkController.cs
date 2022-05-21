@@ -56,7 +56,7 @@ namespace Farmer.Modern.Controllers
             ViewBag.CategoryId = new SelectList(categories, "Id", "Name", categoryId);
             ViewBag.WaterMotorId = new SelectList(motors, "Id", "Name", motorId);
             ViewBag.Agent = new SelectList(agents, "Id", "Name", agentId);
-            ViewBag.Status = new SelectList(statusResult, "Value", "Key", (int)status);
+            ViewBag.Status = new SelectList(statusResult, "Value", "Key", (int) status);
         }
 
         // GET: Work
@@ -172,7 +172,6 @@ namespace Farmer.Modern.Controllers
                     WaterMotorId = work.WaterMotorId,
                     EndActionDateTime = work.EndActionDateTime,
                     ProductId = work.ProductId,
-                    
                 };
                 _context.Add(w);
                 await _context.SaveChangesAsync();
@@ -299,7 +298,7 @@ namespace Farmer.Modern.Controllers
             workDto.WaterMotorName = work.WaterMotor?.Name;
             workDto.Description = work.Description;
             workDto.Type = work.Type;
-            workDto.Size = work.Size;                
+            workDto.Size = work.Size;
             if (work == null)
             {
                 return NotFound();
@@ -324,8 +323,10 @@ namespace Farmer.Modern.Controllers
             return _context.Work.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> workReport(DateTime? startDate, DateTime? endDate)
+
+        public async Task<IActionResult> Report(DateTime? startDate, DateTime? endDate , long? gardenId)
         {
+            await DropDownBinding();
             var workDtos = new List<WorkDto>();
             var works = _context.Work.Include(x => x.Category)
                 .Include(x => x.Garden)
@@ -334,11 +335,15 @@ namespace Farmer.Modern.Controllers
 
             if (startDate != null)
                 works = works.Where(x => x.CreationDatetime >= startDate);
-            
+
             if (endDate != null)
                 works = works.Where(x => x.CreationDatetime <= endDate);
             
-            foreach (var item in works)
+            if (gardenId != null)
+                works = works.Where(x => x.GardenId == gardenId);
+
+            var workfilter = await works.ToListAsync();
+            foreach (var item in workfilter)
             {
                 var agentFullName = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.AgentId.ToString());
                 var creatorUser =
@@ -366,7 +371,6 @@ namespace Farmer.Modern.Controllers
 
 
             return View(workDtos);
-
         }
     }
 }

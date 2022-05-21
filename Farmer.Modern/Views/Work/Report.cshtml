@@ -1,13 +1,13 @@
 @model IEnumerable<Farmer.Modern.Dto.WorkDto>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "گزارشات عملیات";
     Layout = "_Layout";
 }
 
 <div class="page-title">
     <div class="title_left">
-        <h3>لیست عملیات</h3>
+        <h3>گزارش عملیات ها</h3>
     </div>
 </div>
 
@@ -16,13 +16,73 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>
-                    لیست عملیات
+                    فیلتر ها
                 </h2>
                 <div class="clearfix"></div>
 
-                <p>
-                    <a class="btn btn-success" asp-action="Create">جدید</a>
-                </p>
+                <form asp-action="Report" method="get" class="form-horizontal form-label-left">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="well" style="overflow: auto">
+                        <div class="col-md-4">
+                            از تاریخ
+
+                            <fieldset>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" name="startDate" id="single_cal1" placeholder="First Name" aria-describedby="inputSuccess2Status">
+                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            تاریخ
+
+                            <fieldset>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" name="endDate" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
+                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                            <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            زمین
+
+                            <fieldset>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                         @Html.DropDownList("GardenId", null, htmlAttributes: new {@class = "form-control col-md-7 col-xs-12"})
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button class="btn btn-success">جستجو</button>
+                        </div>
+                    </div>
+                </form>
                 <div class="clearfix"></div>
 
             </div>
