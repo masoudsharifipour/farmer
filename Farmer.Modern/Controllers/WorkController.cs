@@ -323,5 +323,50 @@ namespace Farmer.Modern.Controllers
         {
             return _context.Work.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> workReport(DateTime? startDate, DateTime? endDate)
+        {
+            var workDtos = new List<WorkDto>();
+            var works = _context.Work.Include(x => x.Category)
+                .Include(x => x.Garden)
+                .Include(x => x.Product)
+                .Include(x => x.WaterMotor).AsQueryable();
+
+            if (startDate != null)
+                works = works.Where(x => x.CreationDatetime >= startDate);
+            
+            if (endDate != null)
+                works = works.Where(x => x.CreationDatetime <= endDate);
+            
+            foreach (var item in works)
+            {
+                var agentFullName = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.AgentId.ToString());
+                var creatorUser =
+                    await _context.Users.FirstOrDefaultAsync(x => x.Id == item.CreatorUserId.ToString());
+
+                workDtos.Add(new WorkDto
+                {
+                    Id = item.Id,
+                    ActionDatetime = item.ActionDatetime,
+                    Agent = item.AgentId,
+                    CategoryName = item.Category.Name,
+                    CategoryId = item.CategoryId,
+                    CreatorFullName = $"{creatorUser?.Name} {creatorUser?.LastName}",
+                    FullNameAgent = $"{agentFullName?.Name} {agentFullName?.LastName}",
+                    Status = item.Status,
+                    EndActionDateTime = item.EndActionDateTime,
+                    GardenName = item.Garden.Name,
+                    ProductName = item.Product.Name,
+                    WaterMotorName = item.WaterMotor?.Name,
+                    Description = item.Description,
+                    Type = item.Type,
+                    Size = item.Size,
+                });
+            }
+
+
+            return View(workDtos);
+
+        }
     }
 }

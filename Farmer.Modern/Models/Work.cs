@@ -24,6 +24,8 @@ public class Work
     public Guid? AgentId { get; set; }
     public DateTime? EndActionDateTime { get; set; }
     public ActionStatus Status { get; set; }
+
+    public DateTime CreationDatetime { get; set; } = DateTime.Now;
 }
 
 public enum ActionStatus
