@@ -8,5 +8,5 @@ public class Product
 
     [Display(Name = "نام محصول")] public string Name { get; set; }
 
-    [Display(Name = "توضیحات")] public string Description { get; set; }
+    [Display(Name = "توضیحات")] public string? Description { get; set; }
 }

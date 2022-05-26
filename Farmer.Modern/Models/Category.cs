@@ -10,5 +10,5 @@ public class Category
     [DisplayName("نام دسته")]
     public string Name { get; set; }
     [DisplayName("توضیحات")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }

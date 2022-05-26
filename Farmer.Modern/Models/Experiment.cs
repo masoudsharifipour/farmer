@@ -11,5 +11,5 @@ public class Experiment
     [DisplayName("نام موتور")] public WaterMotor WaterMotor { get; set; }
     public long WaterMotorId { get; set; }
     [DisplayName("نتیجه")] public string Result { get; set; }
-    [DisplayName("توضیحات")] public string Description { get; set; }
+    [DisplayName("توضیحات")] public string? Description { get; set; }
 }

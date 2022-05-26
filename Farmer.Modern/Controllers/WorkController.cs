@@ -68,6 +68,7 @@ namespace Farmer.Modern.Controllers
                 .Include(x => x.Product)
                 .Include(x => x.WaterMotor).ToListAsync();
 
+            if (!work.Any()) return View(workDtos);
             foreach (var item in work)
             {
                 var agentFullName = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.AgentId.ToString());
@@ -146,8 +147,17 @@ namespace Farmer.Modern.Controllers
         // GET: Work/Create
         public async Task<IActionResult> Create()
         {
+            var workDto = new WorkDto();
             await this.DropDownBinding();
-            return View();
+            // var categories = await _context.Category.ToListAsync();
+            // var category = categories.Select(item => new CategoryDto
+            //     {
+            //         CategoryId = item.Id,
+            //         CategoryName = item.Name, Selected = false
+            //     })
+            //     .ToList();
+            // workDto.Category = category;
+            return View(workDto);
         }
 
         // POST: Work/Create
@@ -159,23 +169,25 @@ namespace Farmer.Modern.Controllers
         {
             if (ModelState.IsValid)
             {
-                var w = new Work
-                {
-                    AgentId = work.Agent,
-                    Description = work.Description,
-                    Size = work.Size,
-                    CategoryId = work.CategoryId,
-                    GardenId = work.GardenId,
-                    Status = work.Status,
-                    Type = work.Type,
-                    ActionDatetime = work.ActionDatetime,
-                    WaterMotorId = work.WaterMotorId,
-                    EndActionDateTime = work.EndActionDateTime,
-                    ProductId = work.ProductId,
-                };
-                _context.Add(w);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
+                    var w = new Work
+                    {
+                        AgentId = work.Agent,
+                        Description = work.Description,
+                        Size = work.Size,
+                        CategoryId = work.CategoryId.Value,
+                        GardenId = work.GardenId,
+                        Status = work.Status,
+                        Type = work.Type,
+                        ActionDatetime = work.ActionDatetime,
+                        WaterMotorId = work.WaterMotorId,
+                        EndActionDateTime = work.EndActionDateTime,
+                        ProductId = work.ProductId,
+                    };
+                    _context.Add(w);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                
             }
 
             return View(work);
@@ -234,7 +246,7 @@ namespace Farmer.Modern.Controllers
                         AgentId = work.Agent,
                         Description = work.Description,
                         Size = work.Size,
-                        CategoryId = work.CategoryId,
+                        CategoryId = work.CategoryId.Value,
                         GardenId = work.GardenId,
                         Status = work.Status,
                         Type = work.Type,
@@ -324,7 +336,7 @@ namespace Farmer.Modern.Controllers
         }
 
 
-        public async Task<IActionResult> Report(DateTime? startDate, DateTime? endDate , long? gardenId)
+        public async Task<IActionResult> Report(DateTime? startDate, DateTime? endDate, long? gardenId)
         {
             await DropDownBinding();
             var workDtos = new List<WorkDto>();
@@ -338,7 +350,7 @@ namespace Farmer.Modern.Controllers
 
             if (endDate != null)
                 works = works.Where(x => x.CreationDatetime <= endDate);
-            
+
             if (gardenId != null)
                 works = works.Where(x => x.GardenId == gardenId);
 

@@ -17,5 +17,5 @@ public class Harvest
     [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
     public DateTime HarvestDate { get; set; }
 
-    [DisplayName("توضیحات")] public string Description { get; set; }
+    [DisplayName("توضیحات")] public string? Description { get; set; }
 }

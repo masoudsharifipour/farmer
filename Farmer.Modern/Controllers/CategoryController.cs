@@ -22,7 +22,17 @@ namespace Farmer.Modern.Controllers
         // GET: Category
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            try
+            {
+                var result = await _context.Category.ToListAsync();
+                return View(result);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         // GET: Category/Details/5

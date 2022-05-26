@@ -8,5 +8,5 @@ public class WaterMotor
 
     [Display(Name = "نام موتور")] public string Name { get; set; }
 
-    [Display(Name = "توضیحات")] public string Description { get; set; }
+    [Display(Name = "توضیحات")] public string? Description { get; set; }
 }

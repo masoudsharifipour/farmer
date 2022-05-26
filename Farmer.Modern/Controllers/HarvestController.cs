@@ -19,6 +19,7 @@ namespace Farmer.Modern.Controllers
         {
             _context = context;
         }
+
         public void BindingDate()
         {
             var gardens = _context.Garden.ToList();
@@ -26,18 +27,19 @@ namespace Farmer.Modern.Controllers
             ViewBag.Garden = new SelectList(gardens, "Id", "Name");
             ViewBag.Product = new SelectList(product, "Id", "Name");
         }
-        
-        public void BindingDateEdit(long gardenId , long productId)
+
+        public void BindingDateEdit(long gardenId, long productId)
         {
             var gardens = _context.Garden.ToList();
             var product = _context.Product.ToList();
-            ViewBag.Garden = new SelectList(gardens, "Id", "Name",gardenId);
-            ViewBag.Product = new SelectList(product, "Id", "Name",productId);
+            ViewBag.Garden = new SelectList(gardens, "Id", "Name", gardenId);
+            ViewBag.Product = new SelectList(product, "Id", "Name", productId);
         }
+
         // GET: Harvest
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Harvest.Include(x=>x.Garden).Include(x=>x.Product).ToListAsync());
+            return View(await _context.Harvest.Include(x => x.Garden).Include(x => x.Product).ToListAsync());
         }
 
         // GET: Harvest/Details/5
@@ -48,7 +50,7 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var harvest = await _context.Harvest.Include(x=>x.Garden).Include(x=>x.Product)
+            var harvest = await _context.Harvest.Include(x => x.Garden).Include(x => x.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (harvest == null)
             {
@@ -72,18 +74,20 @@ namespace Farmer.Modern.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HarvestDto harvest)
         {
-            if (!ModelState.IsValid) return View(harvest);
-            var ha = new Harvest
+            if (ModelState.IsValid)
             {
-                Description = harvest.Description,
-                Size = harvest.Size,
-                GardenId = harvest.Garden,
-                HarvestDate = harvest.HarvestDate,
-                ProductId = harvest.Product
-            };
+                var ha = new Harvest
+                {
+                    Description = harvest.Description,
+                    Size = harvest.Size,
+                    GardenId = harvest.Garden,
+                    HarvestDate = harvest.HarvestDate,
+                    ProductId = harvest.Product
+                };
+                _context.Add(ha);
+                await _context.SaveChangesAsync();
+            }
 
-            _context.Add(ha);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -109,10 +113,9 @@ namespace Farmer.Modern.Controllers
                 {
                     return NotFound();
                 }
-
             }
-            return View(hr);
 
+            return View(hr);
         }
 
         // POST: Harvest/Edit/5
@@ -139,7 +142,6 @@ namespace Farmer.Modern.Controllers
                         HarvestDate = harvest.HarvestDate,
                         ProductId = harvest.Product,
                         Id = id
-                        
                     };
                     _context.Update(ha);
                     await _context.SaveChangesAsync();
@@ -155,8 +157,10 @@ namespace Farmer.Modern.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(harvest);
         }
 
@@ -168,7 +172,7 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            var harvest = await _context.Harvest.Include(x=>x.Garden).Include(x=>x.Product)
+            var harvest = await _context.Harvest.Include(x => x.Garden).Include(x => x.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (harvest == null)
             {

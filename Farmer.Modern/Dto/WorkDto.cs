@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using Farmer.Modern.Models;
+using Microsoft.Build.Framework;
 using Category = Farmer.Modern.Migrations.Category;
 using Garden = Farmer.Modern.Migrations.Garden;
 using Product = Farmer.Modern.Migrations.Product;
@@ -11,21 +12,21 @@ public class WorkDto
 {
     public long Id { get; set; }
     [DisplayName("نام زمین")]
-    public Garden Garden { get; set; }
+    public Garden? Garden { get; set; }
     [DisplayName("نام زمین")]
     public long GardenId { get; set; }
     [DisplayName("نام زمین")]
     public string GardenName{ get; set; }
     [DisplayName("نام محصول")]
-    public Product Product { get; set; }
+    public Product? Product { get; set; }
     [DisplayName("نام محصول")]
     public long ProductId { get; set; }
     [DisplayName("نام محصول")]
     public string ProductName { get; set; }
     [DisplayName("نوع عملیات")]
-    public Category Category { get; set; }
+    public Category? Category { get; set; }
     [DisplayName("نوع عملیات")]
-    public long CategoryId { get; set; }
+    public long? CategoryId { get; set; }
     [DisplayName("نوع عملیات")]
     public string CategoryName { get; set; }
     [DisplayName("نام موتور")]
