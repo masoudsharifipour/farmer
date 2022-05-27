@@ -26,7 +26,7 @@ public class WorkDto
     [DisplayName("نوع عملیات")]
     public Category? Category { get; set; }
     [DisplayName("نوع عملیات")]
-    public long? CategoryId { get; set; }
+    public long CategoryId { get; set; }
     [DisplayName("نوع عملیات")]
     public string CategoryName { get; set; }
     [DisplayName("نام موتور")]
@@ -35,8 +35,8 @@ public class WorkDto
     public long? WaterMotorId { get; set; }
     [DisplayName("نام موتور")]
     public string WaterMotorName { get; set; }
-    [DisplayName("تاریخ انجام")]
-    public DateTime ActionDateTime { get; set; }
+
+    [DisplayName("تاریخ انجام")] public DateTime ActionDateTime { get; set; } = DateTime.Now;
     [DisplayName("حجم")]
     public int? Size { get; set; }
     [DisplayName("نوع")]

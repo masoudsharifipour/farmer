@@ -153,7 +153,8 @@ namespace Farmer.Modern.Controllers
             var category = categories.Select(item => new CategoryDto
                 {
                     CategoryId = item.Id,
-                    CategoryName = item.Name, Selected = false
+                    CategoryName = item.Name,
+                    Selected = false
                 })
                 .ToList();
             workInputDto.Category = category;
@@ -169,7 +170,7 @@ namespace Farmer.Modern.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (var item in work.Category)
+                foreach (var item in work.Category.Where(x => x.Selected))
                 {
                     var w = new Work
                     {
@@ -248,7 +249,7 @@ namespace Farmer.Modern.Controllers
                         AgentId = work.Agent,
                         Description = work.Description,
                         Size = work.Size,
-                        CategoryId = work.CategoryId.Value,
+                        CategoryId = work.CategoryId,
                         GardenId = work.GardenId,
                         Status = work.Status,
                         Type = work.Type,
@@ -321,6 +322,7 @@ namespace Farmer.Modern.Controllers
             return View(workDto);
         }
 
+
         // POST: Work/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -385,6 +387,29 @@ namespace Farmer.Modern.Controllers
 
 
             return View(workDtos);
+        }
+
+        public async Task<IActionResult> Action(long? id)
+        {
+            ActionDto actionDto = new ActionDto();
+            var work = await _context.Work.FirstOrDefaultAsync(x => x.Id == id);
+            var statusResult = (from object e in Enum.GetValues(typeof(ActionStatus))
+                select new KeyValuePair<string, int>(e.ToString(), (int) e)).ToList();
+            
+            ViewBag.Status = new SelectList(statusResult, "Value", "Key", (int) work.Status);
+            return View(actionDto);
+
+        }
+
+        [HttpPost, ActionName("Action")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Action(long id , ActionDto actionDto)
+        {
+            var work = await _context.Work.FirstOrDefaultAsync(x => x.Id == id);
+            work.EndActionDateTime = actionDto.FinishDataTime;
+            work.Status = actionDto.Status;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

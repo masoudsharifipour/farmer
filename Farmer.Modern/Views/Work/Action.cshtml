@@ -1,0 +1,70 @@
+@model Farmer.Modern.Dto.ActionDto
+
+@{
+    ViewBag.Title = "تغییر وضعیت";
+    Layout = "_Layout";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>تغییر وضعیت عملیات</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    ثبت اکشن
+                </h2>
+                <div class="clearfix"></div>
+
+                <form asp-action="Action" class="form-horizontal form-label-left">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="well" style="overflow: auto">
+                        <div class="col-md-4">
+                            تاریخ اتمام کار
+
+                            <fieldset>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                            <input asp-for="FinishDataTime" class="form-control has-feedback-left"/>
+                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            وضعیت
+
+                            <fieldset>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                            @Html.DropDownList("Status", ViewBag.Status as SelectList, htmlAttributes: new {@class = "form-control col-md-7 col-xs-12"})
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button class="btn btn-success">ثبت اتمام کار </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

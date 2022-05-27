@@ -11,8 +11,11 @@ namespace Farmer.Modern.Dto;
 public class WorkInputDto
 {
     public long Id { get; set; }
-    [DisplayName("نام زمین")] public Garden? Garden { get; set; }
-    [DisplayName("نام زمین")] public long GardenId { get; set; }
+    [DisplayName("نام زمین")] 
+    public Garden? Garden { get; set; }
+    [DisplayName("نام زمین")]
+   
+    public long GardenId { get; set; }
 
     [DisplayName("نام محصول")] public Product? Product { get; set; }
     [DisplayName("نام محصول")] public long ProductId { get; set; }
