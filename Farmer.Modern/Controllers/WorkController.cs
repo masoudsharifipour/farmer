@@ -78,7 +78,7 @@ namespace Farmer.Modern.Controllers
                 workDtos.Add(new WorkDto
                 {
                     Id = item.Id,
-                    ActionDatetime = item.ActionDatetime,
+                    ActionDateTime = item.ActionDatetime,
                     Agent = item.AgentId,
                     CategoryName = item.Category.Name,
                     CategoryId = item.CategoryId,
@@ -120,7 +120,7 @@ namespace Farmer.Modern.Controllers
 
 
             workDtos.Id = work.Id;
-            workDtos.ActionDatetime = work.ActionDatetime;
+            workDtos.ActionDateTime = work.ActionDatetime;
             workDtos.Agent = work.AgentId;
             workDtos.CategoryName = work.Category.Name;
             workDtos.CategoryId = work.CategoryId;
@@ -147,17 +147,17 @@ namespace Farmer.Modern.Controllers
         // GET: Work/Create
         public async Task<IActionResult> Create()
         {
-            var workDto = new WorkDto();
+            var workInputDto = new WorkInputDto();
             await this.DropDownBinding();
-            // var categories = await _context.Category.ToListAsync();
-            // var category = categories.Select(item => new CategoryDto
-            //     {
-            //         CategoryId = item.Id,
-            //         CategoryName = item.Name, Selected = false
-            //     })
-            //     .ToList();
-            // workDto.Category = category;
-            return View(workDto);
+            var categories = await _context.Category.ToListAsync();
+            var category = categories.Select(item => new CategoryDto
+                {
+                    CategoryId = item.Id,
+                    CategoryName = item.Name, Selected = false
+                })
+                .ToList();
+            workInputDto.Category = category;
+            return View(workInputDto);
         }
 
         // POST: Work/Create
@@ -165,29 +165,31 @@ namespace Farmer.Modern.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(WorkDto work)
+        public async Task<IActionResult> Create(WorkInputDto work)
         {
             if (ModelState.IsValid)
             {
-                
+                foreach (var item in work.Category)
+                {
                     var w = new Work
                     {
                         AgentId = work.Agent,
                         Description = work.Description,
                         Size = work.Size,
-                        CategoryId = work.CategoryId.Value,
+                        CategoryId = item.CategoryId,
                         GardenId = work.GardenId,
                         Status = work.Status,
                         Type = work.Type,
-                        ActionDatetime = work.ActionDatetime,
+                        ActionDatetime = work.ActionDateTime,
                         WaterMotorId = work.WaterMotorId,
                         EndActionDateTime = work.EndActionDateTime,
                         ProductId = work.ProductId,
                     };
                     _context.Add(w);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                
+                }
+
+                return RedirectToAction(nameof(Index));
             }
 
             return View(work);
@@ -211,7 +213,7 @@ namespace Farmer.Modern.Controllers
                 CategoryId = work.CategoryId,
                 GardenId = work.GardenId,
                 Type = work.Type,
-                ActionDatetime = work.ActionDatetime,
+                ActionDateTime = work.ActionDatetime,
                 WaterMotorId = work.WaterMotorId,
                 EndActionDateTime = work.EndActionDateTime,
                 ProductId = work.ProductId
@@ -250,7 +252,7 @@ namespace Farmer.Modern.Controllers
                         GardenId = work.GardenId,
                         Status = work.Status,
                         Type = work.Type,
-                        ActionDatetime = work.ActionDatetime,
+                        ActionDatetime = work.ActionDateTime,
                         WaterMotorId = work.WaterMotorId,
                         EndActionDateTime = work.EndActionDateTime,
                         ProductId = work.ProductId
@@ -297,7 +299,7 @@ namespace Farmer.Modern.Controllers
 
 
             workDto.Id = work.Id;
-            workDto.ActionDatetime = work.ActionDatetime;
+            workDto.ActionDateTime = work.ActionDatetime;
             workDto.Agent = work.AgentId;
             workDto.CategoryName = work.Category.Name;
             workDto.CategoryId = work.CategoryId;
@@ -364,7 +366,7 @@ namespace Farmer.Modern.Controllers
                 workDtos.Add(new WorkDto
                 {
                     Id = item.Id,
-                    ActionDatetime = item.ActionDatetime,
+                    ActionDateTime = item.ActionDatetime,
                     Agent = item.AgentId,
                     CategoryName = item.Category.Name,
                     CategoryId = item.CategoryId,
