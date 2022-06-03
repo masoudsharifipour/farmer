@@ -2,6 +2,7 @@
 @model LoginModel
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Farmer.Modern.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -18,7 +19,7 @@
                     <i class="icon-map-marker icon-4x text-success"></i>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <h1 class="h3 mb-3 font-weight-normal">سلام تست</h1>
                     <div asp-validation-summary="All" class="text-danger"></div>
                 </div>
                 <div class="form-group ">
@@ -52,3 +53,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

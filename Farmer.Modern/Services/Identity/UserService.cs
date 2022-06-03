@@ -43,7 +43,7 @@ namespace Farmer.Modern.Services.Identity
             LastName = applicationUserInputDto.LastName
         };
         var result = await _userManager.CreateAsync(user, applicationUserInputDto.Password);
-        return true;
+        return result.Succeeded;
     }
 
     public async Task<bool> UpdateAsync(string id, ApplicationUserInputDto applicationUserInputDto)

@@ -30,13 +30,10 @@ namespace Farmer.Modern.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ApplicationUserInputDto user)
         {
-            if (user.UserName == null || user.Password == null)
-            {
-                return BadRequest();
-            }
-
-            await _userService.AddAsync(user);
-            return View(user);
+           var result = await _userService.AddAsync(user);
+           if(result)
+               return RedirectToAction(nameof(Index));
+           return View(user);
         }
     }
 }
