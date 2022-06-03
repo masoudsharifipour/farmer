@@ -6,11 +6,13 @@ using Farmer.Modern.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Farmer.Modern.Models;
 using Farmer.Modern.Models.DbContext;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Farmer.Modern.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

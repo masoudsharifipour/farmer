@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Farmer.Modern;
-
-public class Startup
+namespace Farmer.Modern
+{
+    public class Startup
 {
     public IConfiguration Configuration { get; }
     public IWebHostEnvironment Environment { get; }
@@ -79,3 +79,5 @@ public class Startup
         
     }
 }
+}
+

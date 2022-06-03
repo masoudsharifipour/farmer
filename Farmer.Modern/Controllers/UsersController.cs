@@ -4,38 +4,40 @@ using Farmer.Modern.Services.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Farmer.Modern.Controllers;
-
-public class UsersController : Controller
+namespace Farmer.Modern.Controllers
 {
-    private readonly UserService _userService;
-
-    public UsersController(UserService userService)
+    public class UsersController : Controller
     {
-        _userService = userService;
-    }
+        private readonly UserService _userService;
 
-    public async Task<IActionResult> Index()
-    {
-        var users = await _userService.GetUsers();
-        return View(users);
-    }
-
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Create(ApplicationUserInputDto user)
-    {
-        if (user.UserName == null || user.Password == null)
+        public UsersController(UserService userService)
         {
-            return BadRequest();
+            _userService = userService;
         }
 
-        await _userService.AddAsync(user);
-        return View(user);
+        public async Task<IActionResult> Index()
+        {
+            var users = await _userService.GetUsers();
+            return View(users);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(ApplicationUserInputDto user)
+        {
+            if (user.UserName == null || user.Password == null)
+            {
+                return BadRequest();
+            }
+
+            await _userService.AddAsync(user);
+            return View(user);
+        }
     }
 }
+

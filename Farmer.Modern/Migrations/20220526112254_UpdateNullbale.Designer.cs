@@ -22,7 +22,7 @@ namespace Farmer.Modern.Migrations
                 .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1, 1);
 
             modelBuilder.Entity("Farmer.Modern.Models.Category", b =>
                 {
@@ -30,7 +30,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -50,7 +50,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -80,7 +80,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1, 1);
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -122,7 +122,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -154,7 +154,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -174,7 +174,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -194,7 +194,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1, 1);
 
                     b.Property<DateTime>("ActionDatetime")
                         .HasColumnType("datetime2");
@@ -281,7 +281,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -377,7 +377,7 @@ namespace Farmer.Modern.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");

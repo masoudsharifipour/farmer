@@ -1,8 +1,11 @@
-namespace Farmer.Modern.Dto;
-
-public class CategoryDto
+namespace Farmer.Modern.Dto
 {
-    public long CategoryId { get; set; }
-    public string CategoryName { get; set; }
-    public bool Selected { get; set; }
+    public class CategoryDto
+    {
+        public long CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public bool Selected { get; set; }
+    }
+
 }
+

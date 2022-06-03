@@ -7,37 +7,39 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Farmer.Modern;
-
-public class Program
+namespace Farmer.Modern
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        CultureInfo info = new CultureInfo("fa-Ir");
-        info.DateTimeFormat.Calendar = new PersianCalendar();
-        Thread.CurrentThread.CurrentCulture = info;
-        Thread.CurrentThread.CurrentUICulture = info;
+        public static void Main(string[] args)
+        {
+            CultureInfo info = new CultureInfo("fa-Ir");
+            info.DateTimeFormat.Calendar = new PersianCalendar();
+            Thread.CurrentThread.CurrentCulture = info;
+            Thread.CurrentThread.CurrentUICulture = info;
 
-        CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
  
-    }
+        }
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(builder =>
-            {
-                builder.UseStartup<Startup>();
-                builder.ConfigureLogging((hostingContext, logging) =>
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(builder =>
                 {
-                    logging.ClearProviders();
-                    logging.AddConsole();
-                    logging.SetMinimumLevel(LogLevel.Information);
-                });
-            })
-            .ConfigureLogging((hostingContext, logging) =>
-                logging.SetMinimumLevel(hostingContext.HostingEnvironment.IsProduction()
-                    ? LogLevel.Error
-                    : LogLevel.Trace));
+                    builder.UseStartup<Startup>();
+                    builder.ConfigureLogging((hostingContext, logging) =>
+                    {
+                        logging.ClearProviders();
+                        logging.AddConsole();
+                        logging.SetMinimumLevel(LogLevel.Information);
+                    });
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                    logging.SetMinimumLevel(hostingContext.HostingEnvironment.IsProduction()
+                        ? LogLevel.Error
+                        : LogLevel.Trace));
+        }
     }
 }
+

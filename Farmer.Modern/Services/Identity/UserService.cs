@@ -6,14 +6,14 @@ using Farmer.Modern.Models.DbContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Farmer.Modern.Services.Identity;
-
-public class UserService
+namespace Farmer.Modern.Services.Identity
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    public class UserService
+{
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly ApplicationDbContext _applicationDbContext;
 
-    public UserService(UserManager<IdentityUser> userManager, ApplicationDbContext applicationDbContext)
+    public UserService(UserManager<ApplicationUser> userManager, ApplicationDbContext applicationDbContext)
     {
         _userManager = userManager;
         _applicationDbContext = applicationDbContext;
@@ -67,3 +67,5 @@ public class UserService
         return true;
     }
 }
+}
+

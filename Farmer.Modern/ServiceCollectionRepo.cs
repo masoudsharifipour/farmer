@@ -5,14 +5,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Farmer.Modern;
-
-public static class ServiceCollectionRepo
+namespace Farmer.Modern
 {
-    public static void AddServices(this IServiceCollection services)
+    public static class ServiceCollectionRepo
     {
-        services.AddScoped<UserService>();
-        services.AddScoped<PermissionService>();
-        services.AddScoped<RoleService>();
+        public static void AddServices(this IServiceCollection services)
+        {
+          // services.AddScoped<UserService>();
+            services.AddScoped<PermissionService>();
+            services.AddScoped<RoleService>();
+        }
     }
 }
+

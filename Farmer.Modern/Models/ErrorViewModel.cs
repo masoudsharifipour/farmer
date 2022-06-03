@@ -1,8 +1,10 @@
-namespace Farmer.Modern.Models;
-
-public class ErrorViewModel
+namespace Farmer.Modern.Models
 {
-    public string? RequestId { get; set; }
-
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
+    
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
 }
+
