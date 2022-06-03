@@ -36,7 +36,7 @@ namespace Farmer.Modern.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
 
         [TempData]
         public string ErrorMessage { get; set; }
@@ -51,7 +51,7 @@ namespace Farmer.Modern.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "مرا به خاطر بپسار :)")]
             public bool RememberMe { get; set; }
         }
 
@@ -86,7 +86,7 @@ namespace Farmer.Modern.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect(!string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -99,7 +99,7 @@ namespace Farmer.Modern.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "اطلاعات کاربری صحیح نیست.");
                     return Page();
                 }
             }
