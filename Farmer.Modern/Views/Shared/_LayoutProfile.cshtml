@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - کشاورزی مدرن </title>
+
+    <meta name="fontiran.com:license" content="Y68A9">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="icon" href="~/images/favicon.ico" type="image/ico"/>
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/Farmer.Modern.styles.css" asp-append-version="true"/>*@
+
+
+    <!-- Bootstrap -->
+    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="~/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="~/css/custom.min.css" rel="stylesheet">
+
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col hidden-print">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="/" class="site_title">
+                        <i class="fa fa-paw"></i> <span>کشاورزی مدرن</span>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <partial name="_LoginSidbarPartial"/>
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        @* <h3>کاربران</h3> *@
+                        <ul class="nav side-menu">
+                            <li>
+                                <a><i class="fa fa-clone"></i>عملیات ها <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li>
+                                        <a href="/work">عملیات</a>
+                                    </li>
+                                    <li>
+                                        <a href="/work/report">گزارشات</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- /sidebar menu -->
+
+            </div>
+        </div>
+        <!-- top navigation -->
+          <partial name="_LoginPartial"/>
+        <!-- /top navigation -->
+        
+        <!-- /header content -->
+        
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+            @RenderBody();
+            <br/>
+
+
+        </div>
+        <!-- /page content -->
+        <!-- footer content -->
+        <footer class="hidden-print">
+            <div class="pull-left">
+                پیاده سازی مسعود شریفی پور
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+
+
+    </div>
+</div>
+
+<div id="lock_screen">
+    <table>
+        <tr>
+            <td>
+                <div class="clock"></div>
+                <span class="unlock">
+                    <span class="fa-stack fa-5x">
+                        <i class="fa fa-square-o fa-stack-2x fa-inverse"></i>
+                        <i id="icon_lock" class="fa fa-lock fa-stack-1x fa-inverse"></i>
+                    </span>
+                </span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- jQuery -->
+<script src="~/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="~/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="~/vendors/nprogress/nprogress.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="~/vendors/iCheck/icheck.min.js"></script>
+
+<!-- bootstrap-daterangepicker -->
+<script src="~/vendors/moment/min/moment.min.js"></script>
+
+<script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<!-- Chart.js -->
+<script src="~/vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- jQuery Sparklines -->
+<script src="~/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- gauge.js -->
+<script src="~/vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- Skycons -->
+<script src="~/vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="~/vendors/Flot/jquery.flot.js"></script>
+<script src="~/vendors/Flot/jquery.flot.pie.js"></script>
+<script src="~/vendors/Flot/jquery.flot.time.js"></script>
+<script src="~/vendors/Flot/jquery.flot.stack.js"></script>
+<script src="~/vendors/Flot/jquery.flot.resize.js"></script>
+@*     <!-- Flot plugins --> *@
+@*     <script src="~/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script> *@
+@*     <script src="~/vendors/flot-spline/js/jquery.flot.spline.min.js"></script> *@
+@*     <script src="~/vendors/flot.curvedlines/curvedLines.js"></script> *@
+<!-- DateJS -->
+<script src="~/vendors/DateJS/build/production/date.min.js"></script>
+
+@* <!-- JQVMap --> *@
+@* <script src="~/vendors/jqvmap/dist/jquery.vmap.js"></script> *@
+@* <script src="~/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script> *@
+@* <script src="~/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script> *@
+
+<!-- Custom Theme Scripts -->
+<script src="~/js/custom.min.js"></script>
+
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -21,7 +21,9 @@
       <Content Remove="wwwroot\js\moment\" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Areas" />
+      <Folder Include="Areas\Profile\Data" />
+      <Folder Include="Areas\Profile\Models" />
+      <Folder Include="Areas\Profile\Views" />
       <Folder Include="wwwroot\css\maps\" />
       <Folder Include="wwwroot\fonts\" />
       <Folder Include="wwwroot\fonts\eot\" />

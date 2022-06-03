@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Farmer.Modern.Dto;
 using Farmer.Modern.Models;
@@ -23,6 +24,14 @@ namespace Farmer.Modern.Services.Identity
     {
         var users = await _applicationDbContext.Users.ToListAsync();
         return users;
+    }
+
+
+    public async Task<List<string?>> UserRole(string email)
+    {
+        var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+        var role = await _userManager.GetRolesAsync(user);
+        return role.ToList();
     }
 
     public async Task<bool> AddAsync(ApplicationUserInputDto applicationUserInputDto)
