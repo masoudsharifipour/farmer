@@ -11,10 +11,9 @@ namespace Farmer.Modern
     {
         public static void AddServices(this IServiceCollection services)
         {
-          // services.AddScoped<UserService>();
+            services.AddScoped<UserService>();
             services.AddScoped<PermissionService>();
             services.AddScoped<RoleService>();
         }
     }
 }
-
