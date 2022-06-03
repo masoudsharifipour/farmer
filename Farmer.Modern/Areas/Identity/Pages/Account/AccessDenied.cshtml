@@ -1,10 +1,31 @@
 ﻿@page
 @model AccessDeniedModel
 @{
-    ViewData["Title"] = "Access denied";
+    Layout = "_BlankLayout";
+    ViewData["Title"] = "اخطار دسترسی";
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <!-- page content -->
+        <div class="col-md-12">
+            <div class="col-middle">
+                <div class="text-center text-center">
+                    <h1 class="error-number">403</h1>
+                    <h2>امکان دسترسی وجود ندارد</h2>
+                    <p>
+                        احراز هویت کامل برای دسترسی به این منبع لازم است. <a href="/">بازگشت</a>
+                    </p>
+                    <div class="mid_center">
+               
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+    </div>
+</div>
+
+
+</body>
