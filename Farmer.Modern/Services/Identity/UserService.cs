@@ -10,71 +10,83 @@ using Microsoft.EntityFrameworkCore;
 namespace Farmer.Modern.Services.Identity
 {
     public class UserService
-{
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ApplicationDbContext _applicationDbContext;
-
-    public UserService(UserManager<ApplicationUser> userManager, ApplicationDbContext applicationDbContext)
     {
-        _userManager = userManager;
-        _applicationDbContext = applicationDbContext;
-    }
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _applicationDbContext;
 
-    public async Task<List<ApplicationUser>> GetUsers()
-    {
-        var users = await _applicationDbContext.Users.ToListAsync();
-        return users;
-    }
-
-
-    public async Task<List<string?>> UserRole(string email)
-    {
-        var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
-        var role = await _userManager.GetRolesAsync(user);
-        return role.ToList();
-    }
-
-    public async Task<bool> AddAsync(ApplicationUserInputDto applicationUserInputDto)
-    {
-        var userAny = await _userManager.FindByNameAsync(applicationUserInputDto.UserName);
-        if (userAny != null)
+        public UserService(UserManager<ApplicationUser> userManager, ApplicationDbContext applicationDbContext)
         {
-            return false;
+            _userManager = userManager;
+            _applicationDbContext = applicationDbContext;
         }
 
-        var user = new ApplicationUser
+        public async Task<List<ApplicationUser>> GetUsers()
         {
-            Email = applicationUserInputDto.Email,
-            UserName = applicationUserInputDto.UserName,
-            PhoneNumber = applicationUserInputDto.PhoneNumber,
-            Address = applicationUserInputDto.Address,
-            Name = applicationUserInputDto.Name,
-            LastName = applicationUserInputDto.LastName
-        };
-        var result = await _userManager.CreateAsync(user, applicationUserInputDto.Password);
-        return result.Succeeded;
-    }
-
-    public async Task<bool> UpdateAsync(string id, ApplicationUserInputDto applicationUserInputDto)
-    {
-        var userAny = await _userManager.FindByNameAsync(applicationUserInputDto.UserName);
-        if (userAny != null)
-        {
-            return false;
+            var users = await _applicationDbContext.Users.ToListAsync();
+            return users;
         }
 
-        var user = new ApplicationUser
+        public async Task<ApplicationUser> GetById(string id)
         {
-            Email = applicationUserInputDto.Email,
-            UserName = applicationUserInputDto.UserName,
-            PhoneNumber = applicationUserInputDto.PhoneNumber,
-            Address = applicationUserInputDto.Address,
-            Name = applicationUserInputDto.Name,
-            LastName = applicationUserInputDto.LastName
-        };
-        await _userManager.UpdateAsync(user);
-        return true;
+            return await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+
+        public async Task<List<string?>> UserRole(string email)
+        {
+            var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var role = await _userManager.GetRolesAsync(user);
+            return role.ToList();
+        }
+
+        public async Task<bool> AddAsync(ApplicationUserInputDto applicationUserInputDto)
+        {
+            var userAny = await _userManager.FindByNameAsync(applicationUserInputDto.UserName);
+            if (userAny != null)
+            {
+                return false;
+            }
+
+            var user = new ApplicationUser
+            {
+                Email = applicationUserInputDto.Email,
+                UserName = applicationUserInputDto.PhoneNumber,
+                PhoneNumber = applicationUserInputDto.PhoneNumber,
+                Address = applicationUserInputDto.Address,
+                Name = applicationUserInputDto.Name,
+                LastName = applicationUserInputDto.LastName
+            };
+            var result = await _userManager.CreateAsync(user, applicationUserInputDto.Password);
+            await _userManager.AddToRoleAsync(user, applicationUserInputDto.Roles.ToString());
+            return result.Succeeded;
+        }
+
+        public async Task<bool> UpdateAsync(string id, ApplicationUserInputDto applicationUserInputDto)
+        {
+            var userAny = await _userManager.FindByNameAsync(applicationUserInputDto.UserName);
+            if (userAny != null)
+            {
+                return false;
+            }
+
+            var user = new ApplicationUser
+            {
+                Id = id,
+                Email = applicationUserInputDto.Email,
+                UserName = applicationUserInputDto.UserName,
+                PhoneNumber = applicationUserInputDto.PhoneNumber,
+                Address = applicationUserInputDto.Address,
+                Name = applicationUserInputDto.Name,
+                LastName = applicationUserInputDto.LastName
+            };
+
+            await _userManager.UpdateAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, roles);
+            await _userManager.AddToRoleAsync(user, applicationUserInputDto.Roles.ToString());
+
+            await _applicationDbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }
-}
-

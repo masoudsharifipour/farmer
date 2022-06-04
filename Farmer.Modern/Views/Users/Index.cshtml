@@ -47,12 +47,12 @@
                                 <td class=" ">@user.PhoneNumber</td>
                                 <td class=" last">
 
-                                    <a class="last btn btn-sm btn-success" asp-controller="Roles" asp-action="Edit" asp-route-id="@user.Id">
+                                    <a class="last btn btn-sm btn-success" asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id">
                                         <i class="fas fa-pencil-alt"></i> ویرایش
                                     </a>
-                                    <a class="last btn btn-sm btn-danger" asp-controller="Roles" asp-action="Details" asp-route-id="@user.Id">
-                                        <i class="fas fa-trash-alt"></i> حذف
-                                    </a>
+                                    @* <a class="last btn btn-sm btn-danger" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id"> *@
+                                    @*     <i class="fas fa-trash-alt"></i> حذف *@
+                                    @* </a> *@
                                 </td>
                             </tr>
                         }

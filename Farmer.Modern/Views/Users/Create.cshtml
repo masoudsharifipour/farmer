@@ -20,6 +20,13 @@
                 <form asp-action="Create" class="form-horizontal form-label-left">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
+                        <label asp-for="Roles" class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("Roles", null, htmlAttributes: new {@class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                        <span asp-validation-for="Roles" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                             نام
                             <span class="required">*</span>
@@ -39,18 +46,14 @@
                         </div>
                     </div>
 
-
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">
                             نام کاربری
-                            <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" asp-for="UserName" id="username" required="required" class="form-control col-md-7 col-xs-12">
+                            <input type="text" asp-for="UserName" id="username" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
-
-
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
                             ایمیل
