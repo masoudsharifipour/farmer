@@ -61,31 +61,28 @@ namespace Farmer.Modern.Services.Identity
             return result.Succeeded;
         }
 
-        public async Task<bool> UpdateAsync(string id, ApplicationUserInputDto applicationUserInputDto)
+        public async Task<bool> UpdateAsync(string id, ApplicationUserInputEditDto applicationUserInputDto)
         {
-            var userAny = await _userManager.FindByNameAsync(applicationUserInputDto.UserName);
-            if (userAny != null)
+            var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var userRole = await _userManager.FindByIdAsync(id);
+            user.Id = id;
+            user.PhoneNumber = applicationUserInputDto.PhoneNumber;
+            user.Address = applicationUserInputDto.Address;
+            user.Name = applicationUserInputDto.Name;
+            user.LastName = applicationUserInputDto.LastName;
+            await _applicationDbContext.SaveChangesAsync();
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Any())
             {
-                return false;
+                await _userManager.RemoveFromRolesAsync(userRole, roles);
+                await _userManager.AddToRoleAsync(userRole, applicationUserInputDto.Roles.ToString());
+            }
+            else
+            {
+                await _userManager.AddToRoleAsync(userRole, applicationUserInputDto.Roles.ToString());
             }
 
-            var user = new ApplicationUser
-            {
-                Id = id,
-                Email = applicationUserInputDto.Email,
-                UserName = applicationUserInputDto.UserName,
-                PhoneNumber = applicationUserInputDto.PhoneNumber,
-                Address = applicationUserInputDto.Address,
-                Name = applicationUserInputDto.Name,
-                LastName = applicationUserInputDto.LastName
-            };
-
-            await _userManager.UpdateAsync(user);
-            var roles = await _userManager.GetRolesAsync(user);
-            await _userManager.RemoveFromRolesAsync(user, roles);
-            await _userManager.AddToRoleAsync(user, applicationUserInputDto.Roles.ToString());
-
-            await _applicationDbContext.SaveChangesAsync();
             return true;
         }
     }

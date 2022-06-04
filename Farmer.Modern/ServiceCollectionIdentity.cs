@@ -20,6 +20,8 @@ namespace Farmer.Modern
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireDigit = false;
                     options.User.RequireUniqueEmail = false;
+                    options.User.RequireUniqueEmail = false;
+                    options.User.AllowedUserNameCharacters = null;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()

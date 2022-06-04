@@ -56,7 +56,7 @@ namespace Farmer.Modern.Controllers
         // GET: user/Edit/5
         public async Task<IActionResult> Edit(string? id)
         {
-            var userInputDto = new ApplicationUserInputDto();
+            var userInputDto = new ApplicationUserInputEditDto();
             if (id == null)
             {
                 return NotFound();
@@ -68,17 +68,20 @@ namespace Farmer.Modern.Controllers
             var role = await _userManager.GetRolesAsync(user);
             if (role.Any())
             {
-                int value = (int) Enum.Parse(typeof(Roles), role.FirstOrDefault() ?? string.Empty);
+                var value = (int) Enum.Parse(typeof(Roles), role.FirstOrDefault() ?? string.Empty);
                 ViewBag.Roles = new SelectList(rolesStatus, "Value", "Key", value);
             }
+            else
+            {
+                ViewBag.Roles = new SelectList(rolesStatus, "Value", "Key");
+            }
+
 
             userInputDto.Id = user.Id;
             userInputDto.Address = user.Address;
-            userInputDto.Email = user.Email;
             user.Name = user.Name;
             user.LastName = user.LastName;
             user.PhoneNumber = user.PhoneNumber;
-            user.UserName = user.UserName;
 
             if (user == null)
             {
@@ -92,7 +95,7 @@ namespace Farmer.Modern.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id,
-            ApplicationUserInputDto applicationUserInputDto)
+            ApplicationUserInputEditDto applicationUserInputDto)
         {
             if (id != applicationUserInputDto.Id)
             {
