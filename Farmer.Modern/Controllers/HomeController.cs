@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Farmer.Modern.Models;
 using Farmer.Modern.Models.DbContext;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -17,19 +18,27 @@ namespace Farmer.Modern.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext,
+            UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _userManager = userManager;
         }
+
 
         public async Task<IActionResult> Index()
         {
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var role = await _userManager.GetRolesAsync(currentUser);
+            if (role.Contains("Basic")) return Redirect("/Profile/Dashboard");
             var homeDto = new HomeDto();
             var values = await GetCountWorkStatus();
             homeDto.WorkCount = values;
             return View(homeDto);
+
         }
 
         public IActionResult Privacy()

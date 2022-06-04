@@ -1,10 +1,106 @@
-@model dynamic
+@model IEnumerable<Farmer.Modern.Dto.WorkDto>
 
 @{
     ViewBag.Title = "title";
     Layout = "_LayoutProfile";
 }
 
-<h2>title</h2>
+<div class="page-title">
+    <div class="title_left">
+        <h3>لیست عملیات</h3>
+    </div>
+</div>
 
-اینجا پروفایل شماست
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    لیست عملیات
+                </h2>
+                <div class="clearfix"></div>
+
+
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.GardenName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FullNameAgent)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ActionDateTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndActionDateTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Type)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.WaterMotorName)
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GardenName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FullNameAgent)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ActionDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndActionDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Type)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WaterMotorName)
+                                </td>
+                                <td>
+                                    <a class="btn btn-default" asp-action="Action" asp-route-id="@item.Id">اتمام کار</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
