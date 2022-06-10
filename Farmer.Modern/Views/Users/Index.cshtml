@@ -19,6 +19,9 @@
                     لیست کاربران
                 </h2>
                 <div class="clearfix"></div>
+                <p>
+                    <a class="btn btn-success" asp-action="Create">جدید</a>
+                </p>
             </div>
 
             <div class="x_content">
@@ -50,9 +53,9 @@
                                     <a class="last btn btn-sm btn-success" asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id">
                                         <i class="fas fa-pencil-alt"></i> ویرایش
                                     </a>
-                                    @* <a class="last btn btn-sm btn-danger" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id"> *@
-                                    @*     <i class="fas fa-trash-alt"></i> حذف *@
-                                    @* </a> *@
+                                    <a class="last btn btn-sm btn-danger" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id">
+                                        <i class="fas fa-trash-alt"></i> حذف
+                                    </a>
                                 </td>
                             </tr>
                         }

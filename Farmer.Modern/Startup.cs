@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Globalization;
+using Farmer.Modern.Helper;
 using Farmer.Modern.Models.DbContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +31,11 @@ namespace Farmer.Modern
 
         public void ConfigureServices(IServiceCollection services)
         {
+            CultureInfo.DefaultThreadCurrentCulture
+                = CultureInfo.DefaultThreadCurrentUICulture
+                    = PersianDateExtensionMethods.GetPersianCulture();
+
+       
             services.AddControllersWithViews();
             services.AddRazorPages();
 

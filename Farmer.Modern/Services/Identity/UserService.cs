@@ -32,9 +32,9 @@ namespace Farmer.Modern.Services.Identity
         }
 
 
-        public async Task<List<string?>> UserRole(string email)
+        public async Task<List<string?>> UserRole(string username)
         {
-            var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var role = await _userManager.GetRolesAsync(user);
             return role.ToList();
         }

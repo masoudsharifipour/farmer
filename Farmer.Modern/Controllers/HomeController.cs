@@ -31,9 +31,14 @@ namespace Farmer.Modern.Controllers
 
         public async Task<IActionResult> Index()
         {
+            
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-            var role = await _userManager.GetRolesAsync(currentUser);
-            if (role.Contains("Basic")) return Redirect("/Profile/Dashboard");
+            if (currentUser != null)
+            {
+                var role = await _userManager.GetRolesAsync(currentUser);
+                if (role.Contains("Basic")) return Redirect("/Profile/Dashboard");
+
+            }
             var homeDto = new HomeDto();
             var values = await GetCountWorkStatus();
             homeDto.WorkCount = values;
@@ -43,6 +48,7 @@ namespace Farmer.Modern.Controllers
 
         public IActionResult Privacy()
         {
+            
             return View();
         }
 

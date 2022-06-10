@@ -6,6 +6,7 @@ using Farmer.Modern.Dto;
 using Farmer.Modern.Helper.Seeds;
 using Farmer.Modern.Migrations;
 using Farmer.Modern.Models;
+using Farmer.Modern.Models.DbContext;
 using Farmer.Modern.Services.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,14 @@ namespace Farmer.Modern.Controllers
     {
         private readonly UserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _dbContext;
 
-        public UsersController(UserService userService, UserManager<ApplicationUser> userManager)
+        public UsersController(UserService userService, UserManager<ApplicationUser> userManager,
+            ApplicationDbContext dbContext)
         {
             _userService = userService;
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public async Task<IActionResult> Index()
@@ -39,6 +43,11 @@ namespace Farmer.Modern.Controllers
 
         public IActionResult Create()
         {
+            ApplicationUserInputDto applicationUserInputDto = new ApplicationUserInputDto();
+            var roles = (from object e in Enum.GetValues(typeof(Roles))
+                select new KeyValuePair<string, int>(e.ToString(), (int) e)).ToList();
+
+            ViewBag.Roles = new SelectList(roles, "Value", "Key");
             return View();
         }
 
@@ -79,9 +88,9 @@ namespace Farmer.Modern.Controllers
 
             userInputDto.Id = user.Id;
             userInputDto.Address = user.Address;
-            user.Name = user.Name;
-            user.LastName = user.LastName;
-            user.PhoneNumber = user.PhoneNumber;
+            userInputDto.Name = user.Name;
+            userInputDto.LastName = user.LastName;
+            userInputDto.PhoneNumber = user.PhoneNumber;
 
             if (user == null)
             {
@@ -117,6 +126,38 @@ namespace Farmer.Modern.Controllers
             }
 
             return View(applicationUserInputDto);
+        }
+
+
+        public async Task<IActionResult> Details(string? id)
+        {
+            var userInputDto = new ApplicationUserInputEditDto();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userService.GetById(id);
+            userInputDto.Id = user.Id;
+            userInputDto.Address = user.Address;
+            userInputDto.Name = user.Name;
+            userInputDto.LastName = user.LastName;
+            userInputDto.PhoneNumber = user.PhoneNumber;
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(userInputDto);
+        }
+
+        public async Task<IActionResult> Delete(string? id)
+        {
+            var user = await _dbContext.Users.FindAsync(id);
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
