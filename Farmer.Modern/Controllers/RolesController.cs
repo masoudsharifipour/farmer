@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Farmer.Modern.Controllers
 {
-    [Authorize("Admin,SuperAdmin")]
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class RolesController : Controller
     {
         private readonly RoleService _roleService;

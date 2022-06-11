@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Farmer.Modern.Controllers
 {
-    [Authorize("Admin,SuperAdmin")]
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class PermissionController : Controller
     {
         private readonly PermissionService _permissionService;

@@ -41,7 +41,7 @@ namespace Farmer.Modern.Services.Identity
 
         public async Task<bool> AddAsync(ApplicationUserInputDto applicationUserInputDto)
         {
-            var userAny = await _userManager.FindByNameAsync(applicationUserInputDto.UserName);
+            var userAny = await _userManager.FindByNameAsync(applicationUserInputDto.PhoneNumber);
             if (userAny != null)
             {
                 return false;
@@ -49,7 +49,6 @@ namespace Farmer.Modern.Services.Identity
 
             var user = new ApplicationUser
             {
-                Email = applicationUserInputDto.Email,
                 UserName = applicationUserInputDto.PhoneNumber,
                 PhoneNumber = applicationUserInputDto.PhoneNumber,
                 Address = applicationUserInputDto.Address,

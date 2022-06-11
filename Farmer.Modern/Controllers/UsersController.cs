@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Farmer.Modern.Controllers
 {
-    [Authorize("Admin,SuperAdmin")]
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class UsersController : Controller
     {
         private readonly UserService _userService;
@@ -57,10 +57,26 @@ namespace Farmer.Modern.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ApplicationUserInputDto user)
         {
-            var result = await _userService.AddAsync(user);
-            if (result)
-                return RedirectToAction(nameof(Index));
-            return View(user);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _userService.AddAsync(user);
+                    if (result)
+                        return RedirectToAction(nameof(Index));
+                    return View(user);
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, "اطلاعات کاربری صحیح نیست.");
+                    return View(user);
+                }
+            }
+            else
+            {
+                  ModelState.AddModelError(string.Empty, "اطلاعات کاربری صحیح نیست.");
+                    return View(user);
+            }
         }
 
 

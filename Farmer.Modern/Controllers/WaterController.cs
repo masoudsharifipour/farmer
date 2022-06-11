@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Farmer.Modern.Controllers
 {
-    [Authorize("Admin,SuperAdmin")]
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class WaterController : Controller
     {
         private readonly ApplicationDbContext _context;
