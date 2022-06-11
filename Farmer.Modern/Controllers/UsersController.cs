@@ -8,6 +8,7 @@ using Farmer.Modern.Migrations;
 using Farmer.Modern.Models;
 using Farmer.Modern.Models.DbContext;
 using Farmer.Modern.Services.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Farmer.Modern.Controllers
 {
+    [Authorize("Admin,SuperAdmin")]
     public class UsersController : Controller
     {
         private readonly UserService _userService;

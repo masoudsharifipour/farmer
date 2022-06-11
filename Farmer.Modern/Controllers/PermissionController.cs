@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using Farmer.Modern.Dto;
 using Farmer.Modern.Services.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Farmer.Modern.Controllers
 {
+    [Authorize("Admin,SuperAdmin")]
     public class PermissionController : Controller
     {
         private readonly PermissionService _permissionService;

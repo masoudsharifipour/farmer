@@ -11,8 +11,8 @@ namespace Farmer.Modern
     {
         public static void AddIdentity(this IServiceCollection services)
         {
-            // services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-            // services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.Password.RequireLowercase = false;
@@ -26,10 +26,6 @@ namespace Farmer.Modern
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-            
-            
-  
         }
     }
 }
-

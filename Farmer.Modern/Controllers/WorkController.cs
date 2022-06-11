@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Farmer.Modern.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize("Admin,SuperAdmin")]
     public class WorkController : Controller
     {
         private readonly ApplicationDbContext _context;

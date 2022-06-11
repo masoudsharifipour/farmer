@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Farmer.Modern.Controllers
 {
-    [Authorize]
+    [Authorize("Admin,SuperAdmin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

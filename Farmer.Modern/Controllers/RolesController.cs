@@ -2,11 +2,13 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Farmer.Modern.Services.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Farmer.Modern.Controllers
 {
+    [Authorize("Admin,SuperAdmin")]
     public class RolesController : Controller
     {
         private readonly RoleService _roleService;

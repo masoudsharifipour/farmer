@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Farmer.Modern.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize("Admin,SuperAdmin")]
     public class GardenController : Controller
     {
         private readonly ApplicationDbContext _context;
