@@ -7,26 +7,28 @@ using System.Threading.Tasks;
 using Farmer.Modern.Dto;
 using Microsoft.AspNetCore.Identity;
 
-namespace Farmer.Modern.Helper;
-
-public static class ClaimsHelper
+namespace Farmer.Modern.Helper
 {
-    public static void GetPermissions(this List<RoleClaimsDto> allPermissions, Type policy, string roleId)
+    public static class ClaimsHelper
     {
-        FieldInfo[] fields = policy.GetFields(BindingFlags.Static | BindingFlags.Public);
-
-        foreach (FieldInfo fi in fields)
+        public static void GetPermissions(this List<RoleClaimsDto> allPermissions, Type policy, string roleId)
         {
-            allPermissions.Add(new RoleClaimsDto() { Value = fi.GetValue(null).ToString(), Type = "Permissions" });
+            FieldInfo[] fields = policy.GetFields(BindingFlags.Static | BindingFlags.Public);
+
+            foreach (FieldInfo fi in fields)
+            {
+                allPermissions.Add(new RoleClaimsDto() { Value = fi.GetValue(null).ToString(), Type = "Permissions" });
+            }
         }
-    }
 
-    public static async Task AddPermissionClaim(this RoleManager<IdentityRole> roleManager, IdentityRole role, string permission)
-    {
-        var allClaims = await roleManager.GetClaimsAsync(role);
-        if (!allClaims.Any(a => a.Type == "Permission" && a.Value == permission))
+        public static async Task AddPermissionClaim(this RoleManager<IdentityRole> roleManager, IdentityRole role, string permission)
         {
-            await roleManager.AddClaimAsync(role, new Claim("Permission", permission));
+            var allClaims = await roleManager.GetClaimsAsync(role);
+            if (!allClaims.Any(a => a.Type == "Permission" && a.Value == permission))
+            {
+                await roleManager.AddClaimAsync(role, new Claim("Permission", permission));
+            }
         }
     }
 }
+

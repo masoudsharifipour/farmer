@@ -1,6 +1,8 @@
-namespace Farmer.Modern.Dto;
-
-public class GenericInputDto
+namespace Farmer.Modern.Dto
 {
+    public class GenericInputDto
+    {
     
+    }
 }
+

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Farmer.Modern.Models;
 using Farmer.Modern.Models.DbContext;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Farmer.Modern.Controllers
 {
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class GardenController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -1,43 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
+using Farmer.Modern.Helper;
+using Farmer.Modern.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Farmer.Modern;
-
-public class Program
+namespace Farmer.Modern
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        CultureInfo info = new CultureInfo("fa-Ir");
-        info.DateTimeFormat.Calendar = new PersianCalendar();
-        Thread.CurrentThread.CurrentCulture = info;
-        Thread.CurrentThread.CurrentUICulture = info;
+        public async static Task Main(string[] args)
+        {
+            var host = CreateHostBuilder(args).Build();
+            await host.RunAsync();
+        }
 
-        CreateHostBuilder(args).Build().Run();
- 
-    }
-
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(builder =>
-            {
-                builder.UseStartup<Startup>();
-                builder.ConfigureLogging((hostingContext, logging) =>
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(builder =>
                 {
-                    logging.ClearProviders();
-                    logging.AddConsole();
-                    logging.SetMinimumLevel(LogLevel.Information);
-                });
-            })
-            .ConfigureLogging((hostingContext, logging) =>
-                logging.SetMinimumLevel(hostingContext.HostingEnvironment.IsProduction()
-                    ? LogLevel.Error
-                    : LogLevel.Trace));
+                    builder.UseStartup<Startup>()
+                        .UseContentRoot(Directory.GetCurrentDirectory());
+
+                    builder.ConfigureLogging((hostingContext, logging) =>
+                    {
+                        logging.ClearProviders();
+                        logging.AddConsole();
+                        logging.SetMinimumLevel(LogLevel.Information);
+                    });
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                    logging.SetMinimumLevel(hostingContext.HostingEnvironment.IsProduction()
+                        ? LogLevel.Error
+                        : LogLevel.Trace));
+        }
     }
 }

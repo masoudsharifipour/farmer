@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace Farmer.Modern.Helper;
-
-public class PermissionRequirement: IAuthorizationRequirement
+namespace Farmer.Modern.Helper
 {
-    public string Permission { get; private set; }
-
-    public PermissionRequirement(string permission)
+    public class PermissionRequirement: IAuthorizationRequirement
     {
-        Permission = permission;
+        public string Permission { get; private set; }
+
+        public PermissionRequirement(string permission)
+        {
+            Permission = permission;
+        }
     }
 }
+

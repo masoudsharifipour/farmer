@@ -1,29 +1,33 @@
 using System.Threading.Tasks;
 using Farmer.Modern.Dto;
 using Farmer.Modern.Services.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Farmer.Modern.Controllers;
-
-public class PermissionController : Controller
+namespace Farmer.Modern.Controllers
 {
-    private readonly PermissionService _permissionService;
-
-    public PermissionController(PermissionService permissionService)
+    [Authorize(Roles = "Admin,SuperAdmin")]
+    public class PermissionController : Controller
     {
-        _permissionService = permissionService;
-    }
+        private readonly PermissionService _permissionService;
 
-    public async Task<IActionResult> Index(string roleId)
-    {
-        var permissions = await _permissionService.GetAll(roleId);
-        return View(permissions);
-    }
+        public PermissionController(PermissionService permissionService)
+        {
+            _permissionService = permissionService;
+        }
 
-    [HttpPost]
-    public async Task<IActionResult> Update(PermissionDto model)
-    {
-        var permission = await _permissionService.Update(model);
-        return RedirectToAction("Index", new {roleId = permission});
+        public async Task<IActionResult> Index(string roleId)
+        {
+            var permissions = await _permissionService.GetAll(roleId);
+            return View(permissions);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(PermissionDto model)
+        {
+            var permission = await _permissionService.Update(model);
+            return RedirectToAction("Index", new {roleId = permission});
+        }
     }
 }
+

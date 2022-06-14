@@ -1,7 +1,9 @@
-namespace Farmer.Modern.Dto;
-
-public class LoginDto
+namespace Farmer.Modern.Dto
 {
-    public string Login { get; set; }
-    public string Password { get; set; }
+    public class LoginDto
+    {
+        public string Login { get; set; }
+        public string Password { get; set; }
+    }
 }
+
