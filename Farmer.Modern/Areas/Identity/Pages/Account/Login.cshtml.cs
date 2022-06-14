@@ -89,7 +89,7 @@ namespace Farmer.Modern.Areas.Identity.Pages.Account
                     var user = await _userService.UserRole(Input.Username);
                     if (user.Contains("Basic"))
                     {
-                        return LocalRedirect("/profile");
+                        return LocalRedirect("/profile/dashboard");
                     }
                     else
                     {

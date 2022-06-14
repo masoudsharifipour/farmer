@@ -57,25 +57,17 @@ namespace Farmer.Modern.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ApplicationUserInputDto user)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    var result = await _userService.AddAsync(user);
-                    if (result)
-                        return RedirectToAction(nameof(Index));
-                    return View(user);
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError(string.Empty, "اطلاعات کاربری صحیح نیست.");
-                    return View(user);
-                }
+                var result = await _userService.AddAsync(user);
+                if (result)
+                    return RedirectToAction(nameof(Index));
+                return View(user);
             }
-            else
+            catch (Exception e)
             {
-                  ModelState.AddModelError(string.Empty, "اطلاعات کاربری صحیح نیست.");
-                    return View(user);
+                ModelState.AddModelError(string.Empty, "اطلاعات کاربری صحیح نیست.");
+                return View(user);
             }
         }
 
@@ -129,21 +121,17 @@ namespace Farmer.Modern.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _userService.UpdateAsync(id, applicationUserInputDto);
-                }
-                catch (Exception exception)
-                {
-                    throw new Exception("Error On update user");
-                }
 
-                return RedirectToAction(nameof(Index));
+            try
+            {
+                await _userService.UpdateAsync(id, applicationUserInputDto);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Error On update user");
             }
 
-            return View(applicationUserInputDto);
+            return RedirectToAction(nameof(Index));
         }
 
 

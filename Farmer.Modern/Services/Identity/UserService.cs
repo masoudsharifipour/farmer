@@ -64,11 +64,14 @@ namespace Farmer.Modern.Services.Identity
         {
             var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
             var userRole = await _userManager.FindByIdAsync(id);
-            user.Id = id;
-            user.PhoneNumber = applicationUserInputDto.PhoneNumber;
-            user.Address = applicationUserInputDto.Address;
-            user.Name = applicationUserInputDto.Name;
-            user.LastName = applicationUserInputDto.LastName;
+            ApplicationUser app = new ApplicationUser();
+            app.PhoneNumber = applicationUserInputDto.PhoneNumber;
+            app.Address = applicationUserInputDto.Address;
+            app.Name = applicationUserInputDto.Name;
+            app.LastName = applicationUserInputDto.LastName;
+            app.Id = id;
+            
+            await _userManager.UpdateAsync(app);
             await _applicationDbContext.SaveChangesAsync();
 
             var roles = await _userManager.GetRolesAsync(user);
