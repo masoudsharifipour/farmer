@@ -44,7 +44,7 @@ namespace Farmer.Modern.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required] [Phone] public string Username { get; set; }
+            [Required] public string Username { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
